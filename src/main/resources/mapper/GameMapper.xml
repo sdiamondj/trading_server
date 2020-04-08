@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ncu.trading_server.mapper.GameMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ncu.trading_server.entity.Game" >
+    <id column="game_id" property="gameId" jdbcType="INTEGER" />
+    <result column="game_name" property="gameName" jdbcType="VARCHAR" />
+    <result column="game_picture" property="gamePicture" jdbcType="VARCHAR" />
+    <result column="game_type" property="gameType" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    game_id, game_name, game_picture, game_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_game
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_game
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ncu.trading_server.entity.Game" >
+    insert into t_game (game_id, game_name, game_picture, 
+      game_type)
+    values (#{gameId,jdbcType=INTEGER}, #{gameName,jdbcType=VARCHAR}, #{gamePicture,jdbcType=VARCHAR}, 
+      #{gameType,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ncu.trading_server.entity.Game" >
+    insert into t_game
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        game_id,
+      </if>
+      <if test="gameName != null" >
+        game_name,
+      </if>
+      <if test="gamePicture != null" >
+        game_picture,
+      </if>
+      <if test="gameType != null" >
+        game_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="gameName != null" >
+        #{gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="gamePicture != null" >
+        #{gamePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="gameType != null" >
+        #{gameType,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ncu.trading_server.entity.Game" >
+    update t_game
+    <set >
+      <if test="gameName != null" >
+        game_name = #{gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="gamePicture != null" >
+        game_picture = #{gamePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="gameType != null" >
+        game_type = #{gameType,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ncu.trading_server.entity.Game" >
+    update t_game
+    set game_name = #{gameName,jdbcType=VARCHAR},
+      game_picture = #{gamePicture,jdbcType=VARCHAR},
+      game_type = #{gameType,jdbcType=SMALLINT}
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </update>
+</mapper>
