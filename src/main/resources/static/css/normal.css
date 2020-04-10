@@ -1,0 +1,58 @@
+.loginDiv{
+	position: absolute;
+	left: 35%;
+	top: 6%;
+	background: white;
+	opacity: 75%;
+	width: 500px;
+	height: 670px;
+}
+.logoDiv{
+	width: 400px;
+	height: 150px;
+	position: relative;
+	left: 10px;
+	top: 20px;
+}
+.logoImg{
+	width: 150px;
+	height: 150px;
+}
+.wordDiv{
+	position: relative;
+	left: 160px;
+	top:-120px;
+	width: 330px;
+	height: 150px;
+}
+.word{
+	font-size: 55px;
+	font-weight: bold;
+	position: relative;
+	top: 20px;
+	left: 5px;
+}
+.formDiv{
+	position: relative;
+	width: 450px;
+	height: 400px;
+	/*background: yellow;*/
+	left: 25px;
+	top: -125px;
+}
+.firstInput{
+	position: relative;
+	/*background: black;*/
+	width: 450px;
+	height: 80px;
+}
+.secondInput{
+	position: relative;
+	width: 450px;
+	height: 40px;
+}
+.noUser{
+	position: relative;
+	left: 115px;
+	font-size: 20px;
+}

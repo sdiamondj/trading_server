@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TestController {
 
-    @Autowired
-    private UserService userService;
-
-    @RequestMapping("/hello")
-    public String test(Model model){
-        model.addAttribute("user",userService.getUser());
-        return "index-test";
-    }
+//    @Autowired
+//    private UserService userService;
+//
+//    @RequestMapping("/hello")
+//    public String test(Model model){
+//        model.addAttribute("user",userService.getUser());
+//        return "login";
+//    }
 }

@@ -1,5 +1,6 @@
 package cn.edu.ncu.trading_server.mapper;
 
+import cn.edu.ncu.trading_server.dto.UserLoginDTO;
 import cn.edu.ncu.trading_server.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,9 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User userLogin(UserLoginDTO dto);
+
+    User selectByPhone(Long userPhone);
+
 }
