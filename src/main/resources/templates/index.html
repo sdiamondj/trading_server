@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>南昌大学游戏交易平台-主页</title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/normal.css}"/>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+</head>
+<body>
+<ul class="layui-nav">
+    <li class="layui-nav-item">
+        <a href="">南昌大学游戏交易平台首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">管理员入口</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">友情链接-南昌大学首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">我要购买</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">我要出售</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">联系客服</a>
+    </li>
+    <li class="layui-nav-item" lay-unselect="">
+        <a href="javascript:;"><img src="image/logo.png" class="layui-nav-img">游戏玩家</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">个人资料</a></dd>
+            <dd><a href="javascript:;">我的订单</a></dd>
+            <dd><a href="javascript:;">退出登录</a></dd>
+        </dl>
+    </li>
+</ul>
+
+<div class="total">
+    <div class="logos">
+        <div class="logoDiv">
+            <img src="image/logo.png" class="logoImg">
+        </div>
+        <div class="wordDiv">
+            <p class="word">游戏交易平台</p>
+        </div>
+        <p class="smallWord">——中国网游新平台</p>
+    </div>
+
+    <div class="searchDiv">
+        <i class="layui-icon layui-icon-search" style="font-size:40px;position: relative;top: 70px;left: 20px;"></i>
+        <form action="" method="get">
+            <input type="text" name="search" placeholder="输入您要查找的游戏/商品名称或关键字"  class="layui-input" style="position: relative;width: 500px;height: 60px; left: 90px;top:20px;font-size: 25px;">
+            <input type="submit" class="layui-btn layui-btn-normal" value="搜索" style="position: relative;width: 150px;height: 60px;font-size:30px; left: 620px;top: -40px;" />
+        </form>
+
+    </div>
+
+    <div class="recommendDiv">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">全平台游戏</li>
+                <li>PC客户端游戏</li>
+                <li>网页游戏</li>
+                <li>手机游戏</li>
+                <li>其他游戏</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-row">
+                        <div class="layui-col-md2" style="height: 140px;">
+                            <a href="http://www.baidu.com"><img src="image/game1.jpg" class="gameLogo"></a>
+                            <div class="gameNameDiv">
+                                <a href="">王者荣耀</a>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md2" style="height: 140px;">
+                            <a href="http://www.baidu.com"><img src="image/game1.jpg" class="gameLogo"></a>
+                            <div class="gameNameDiv">
+                                <a href="">王者荣耀</a>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md12" style="height: 50px;text-align: center;">
+                            <button type="button" class="layui-btn layui-btn-normal" style="width: 200px;font-size:18px;">更多游戏</button>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </div>
+                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item">内容3</div>
+                <div class="layui-tab-item">内容4</div>
+                <div class="layui-tab-item">内容5</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+
+</body>
+</html>

@@ -18,6 +18,7 @@ public class UserService {
 
     public int userRegister(UserLoginDTO userLoginDTO){
         User user = userMapper.selectByPhone(userLoginDTO.getUserPhone());
+
         if(user != null){
             return 0;
         }else{

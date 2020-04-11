@@ -7,8 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/layui.css}"/>
 </head>
 <body>
-hello world!
-<button type="button" class="layui-btn">一个标准的按钮</button>
-<a href="http://www.layui.com" class="layui-btn">一个可跳转的按钮</a>
+
+<span th:text="${session.user.userPhone}"></span>
+
+
 </body>
 </html>

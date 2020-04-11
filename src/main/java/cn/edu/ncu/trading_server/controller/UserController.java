@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -18,12 +20,14 @@ public class UserController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String userLogin(@RequestParam("userPhone")Long userPhone,
-                            @RequestParam("password")String userPassword){
+                            @RequestParam("password")String userPassword,
+                            HttpSession session){
         UserLoginDTO userLoginDTO = new UserLoginDTO(userPhone,userPassword);
         User user = userService.userLogin(userLoginDTO);
         if(user == null){
             return "redirect:/login.html?error=true";
         }else{
+            session.setAttribute("user",user);
             return "redirect:/index.html";
         }
     }
