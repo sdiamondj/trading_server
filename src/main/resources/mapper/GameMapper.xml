@@ -79,4 +79,15 @@
       game_type = #{gameType,jdbcType=SMALLINT}
     where game_id = #{gameId,jdbcType=INTEGER}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="cn.edu.ncu.trading_server.entity.Game">
+    select
+    <include refid="Base_Column_List" />
+    from t_game
+  </select>
+  <select id="selectOfType" resultMap="BaseResultMap" parameterType="java.lang.Short">
+    select
+    <include refid="Base_Column_List" />
+    from t_game
+    where game_type = #{gameType,jdbcType=SMALLINT}
+  </select>
 </mapper>

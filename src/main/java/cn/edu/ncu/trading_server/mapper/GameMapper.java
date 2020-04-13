@@ -4,6 +4,8 @@ import cn.edu.ncu.trading_server.entity.Game;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface GameMapper {
@@ -18,4 +20,8 @@ public interface GameMapper {
     int updateByPrimaryKeySelective(Game record);
 
     int updateByPrimaryKey(Game record);
+
+    List<Game> selectAll();
+
+    List<Game> selectOfType(short gameType);
 }
