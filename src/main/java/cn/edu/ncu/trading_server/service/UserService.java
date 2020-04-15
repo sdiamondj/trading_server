@@ -16,6 +16,10 @@ public class UserService {
         return user;
     }
 
+    public User getUserById(int id){
+        return userMapper.selectByPrimaryKey(id);
+    }
+
     public int userRegister(UserLoginDTO userLoginDTO){
         User user = userMapper.selectByPhone(userLoginDTO.getUserPhone());
 

@@ -126,4 +126,9 @@
       goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_goods
+  </select>
 </mapper>

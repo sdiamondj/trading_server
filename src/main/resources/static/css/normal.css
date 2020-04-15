@@ -60,7 +60,6 @@
 	width: 100%;
 	height: 700px;
 	position: relative;
-
 }
 .logos{
 	position: relative;
@@ -111,4 +110,82 @@
  	overflow:hidden;
  	font-size:18px;
  	text-align:center;
+}
+.bigLogoDiv{
+	position: relative;
+	width: 200px;
+	height: 200px;
+	left: 150px;
+	top: 50px;
+}
+.bigLogo{
+	width: 200px;
+	height: 200px;
+}
+.bigSearchDiv{
+	position: relative;
+	width: 800px;
+	height: 200px;
+	left: 400px;
+	top: -150px;
+}
+.smallDiv{
+	position: relative;
+	width: 900px;
+	height: 50px;
+	top: -100px;
+	left: 150px;
+}
+.firstSpan{
+	font-size:30px;
+}
+.secondSpan{
+	font-size:30px;
+	color: red;
+}
+.tableDiv{
+	position: relative;
+	width: 1200px;
+	left: 150px;
+	top: -90px;
+}
+table{
+	font-size:30px;
+	color: grey;
+	text-align: center;
+}
+table thead tr{
+	height: 80px;
+}
+table thead th{
+	width: 200px;
+	color: #4f6b72;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	border-left: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA  no-repeat;
+	text-align: center;
+	font-size: 30px;
+}
+table tbody tr{
+	height: 100px;
+}
+table tbody th{
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-left: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #4f6b72;
+}
+.pageDiv{
+	position: relative;
+	width: 1000px;
+	height: 100px;
+	left: 200px;
+	top: -80px;
 }

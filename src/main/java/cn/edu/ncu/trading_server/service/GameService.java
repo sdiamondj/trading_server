@@ -12,6 +12,10 @@ public class GameService {
     @Autowired
     private GameMapper gameMapper;
 
+    public Game getGameById(int id){
+        return gameMapper.selectByPrimaryKey(id);
+    }
+
     public List<Game> getHotGames(){
         return gameMapper.selectAll().subList(0,12);
     }
