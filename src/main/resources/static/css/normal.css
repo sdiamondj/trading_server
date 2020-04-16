@@ -146,6 +146,7 @@
 .tableDiv{
 	position: relative;
 	width: 1200px;
+	height: 600px;
 	left: 150px;
 	top: -90px;
 }

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -62,20 +61,25 @@ public class PageController {
     }
 
     @RequestMapping(value = "/search.html")
-    public String search(HttpSession session, Model model){
+    public String search(HttpSession session, Model model,
+                         @RequestParam(required = false,defaultValue = "")String target){
         User user = (User)session.getAttribute("user");
         if(user == null){
             return "redirect:/login.html";
         }else{
+            model.addAttribute("target",target);
             return "search";
         }
     }
 
     @RequestMapping(value = "getTable")
     @ResponseBody
-    public String getTable(){
-        List<SearchGood> list = goodService.getGoods();
-        GoodVO goodVO = new GoodVO(0,"无",list.size(),list );
+    public String getTable(@RequestParam(required = false,defaultValue = "1")int page,
+                           @RequestParam(required = false,defaultValue = "10")int limit,
+                           @RequestParam(required = false,defaultValue = "")String target){
+        List<SearchGood> list = goodService.getGoods(page,limit,target);
+        int count = goodService.getCounts();
+        GoodVO goodVO = new GoodVO(0,"无",count,list );
         return JSON.toJSONString(goodVO);
     }
 }

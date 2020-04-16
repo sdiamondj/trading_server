@@ -24,4 +24,7 @@ public interface GameMapper {
     List<Game> selectAll();
 
     List<Game> selectOfType(short gameType);
+
+    List<Game> selectByTarget(String target);
+
 }

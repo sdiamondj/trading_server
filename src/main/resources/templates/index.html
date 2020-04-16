@@ -21,7 +21,7 @@
         <a href="http://www.ncu.edu.cn/">友情链接-南昌大学首页</a>
     </li>
     <li class="layui-nav-item">
-        <a href="">我要购买</a>
+        <a href="/search.html">我要购买</a>
     </li>
     <li class="layui-nav-item">
         <a href="">我要出售</a>
@@ -52,8 +52,8 @@
 
     <div class="searchDiv">
         <i class="layui-icon layui-icon-search" style="font-size:40px;position: relative;top: 70px;left: 20px;"></i>
-        <form action="" method="get">
-            <input type="text" name="search" placeholder="输入您要查找的游戏/商品名称或关键字" class="layui-input" maxlength="30"
+        <form action="/search.html" method="get">
+            <input type="text" name="target" placeholder="输入您要查找的游戏/商品名称或关键字" class="layui-input" maxlength="30"
                    style="position: relative;width: 500px;height: 60px; left: 90px;top:20px;font-size: 25px;">
             <input type="submit" class="layui-btn layui-btn-normal" value="搜索"
                    style="position: relative;width: 150px;height: 60px;font-size:30px; left: 620px;top: -40px;"/>
@@ -75,18 +75,18 @@
                     <div class="layui-row">
                         <div th:each="hot:${hot}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a href=""><img th:src="'image/games/'+${hot.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${hot.gameName}"><img th:src="'image/games/'+${hot.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
-                                    <a href=""><span th:text="${hot.gameName}"></span></a>
+                                    <a th:href="'/search.html?target='+${hot.gameName}"><span th:text="${hot.gameName}"></span></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="layui-row"><br>
                             <div class="layui-col-md12" style="height: 50px;text-align: center;">
-                                <button type="button" class="layui-btn layui-btn-normal"
+                                <a href="/search.html"><button type="button" class="layui-btn layui-btn-normal"
                                         style="width: 200px;font-size:18px;">更多游戏
-                                </button>
+                                </button></a>
                             </div>
 
                         </div>
@@ -97,18 +97,18 @@
                     <div class="layui-row">
                         <div th:each="client:${client}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a href=""><img th:src="'image/games/'+${client.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${client.gameName}"><img th:src="'image/games/'+${client.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
-                                    <a href=""><span th:text="${client.gameName}"></span></a>
+                                    <a th:href="'/search.html?target='+${client.gameName}"><span th:text="${client.gameName}"></span></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="layui-row"><br>
                             <div class="layui-col-md12" style="height: 50px;text-align: center;">
-                                <button type="button" class="layui-btn layui-btn-normal"
+                                <a href="/search.html"><button type="button" class="layui-btn layui-btn-normal"
                                         style="width: 200px;font-size:18px;">更多游戏
-                                </button>
+                                </button></a>
                             </div>
 
                         </div>
@@ -118,18 +118,18 @@
                     <div class="layui-row">
                         <div th:each="page:${page}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a href=""><img th:src="'image/games/'+${page.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${page.gameName}"><img th:src="'image/games/'+${page.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
-                                    <a href=""><span th:text="${page.gameName}"></span></a>
+                                    <a th:href="'/search.html?target='+${page.gameName}"><span th:text="${page.gameName}"></span></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="layui-row"><br>
                             <div class="layui-col-md12" style="height: 50px;text-align: center;">
-                                <button type="button" class="layui-btn layui-btn-normal"
+                                <a href="/search.html"><button type="button" class="layui-btn layui-btn-normal"
                                         style="width: 200px;font-size:18px;">更多游戏
-                                </button>
+                                </button></a>
                             </div>
 
                         </div>
@@ -139,18 +139,18 @@
                     <div class="layui-row">
                         <div th:each="mobile:${mobile}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a href=""><img th:src="'image/games/'+${mobile.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${mobile.gameName}"><img th:src="'image/games/'+${mobile.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
-                                    <a href=""><span th:text="${mobile.gameName}"></span></a>
+                                    <a th:href="'/search.html?target='+${mobile.gameName}"><span th:text="${mobile.gameName}"></span></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="layui-row"><br>
                             <div class="layui-col-md12" style="height: 50px;text-align: center;">
-                                <button type="button" class="layui-btn layui-btn-normal"
+                                <a href="/search.html"><button type="button" class="layui-btn layui-btn-normal"
                                         style="width: 200px;font-size:18px;">更多游戏
-                                </button>
+                                </button></a>
                             </div>
 
                         </div>
@@ -160,18 +160,18 @@
                     <div class="layui-row">
                         <div th:each="other:${other}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a href=""><img th:src="'image/games/'+${other.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${other.gameName}"><img th:src="'image/games/'+${other.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
-                                    <a href=""><span th:text="${other.gameName}"></span></a>
+                                    <a th:href="'/search.html?target='+${other.gameName}"><span th:text="${other.gameName}"></span></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="layui-row"><br>
                             <div class="layui-col-md12" style="height: 50px;text-align: center;">
-                                <button type="button" class="layui-btn layui-btn-normal"
+                                <a href="/search.html"><button type="button" class="layui-btn layui-btn-normal"
                                         style="width: 200px;font-size:18px;">更多游戏
-                                </button>
+                                </button></a>
                             </div>
 
                         </div>
