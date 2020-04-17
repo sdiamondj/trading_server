@@ -5,11 +5,10 @@ import cn.edu.ncu.trading_server.entity.Good;
 import cn.edu.ncu.trading_server.entity.User;
 import cn.edu.ncu.trading_server.service.GameService;
 import cn.edu.ncu.trading_server.service.GoodService;
+import cn.edu.ncu.trading_server.service.UserService;
 import cn.edu.ncu.trading_server.vo.GoodVO;
 import cn.edu.ncu.trading_server.vo.SearchGood;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.sun.org.apache.bcel.internal.generic.GOTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +27,8 @@ public class PageController {
     private GameService gameService;
     @Autowired
     private GoodService goodService;
+    @Autowired
+    private UserService userService;
 
 
     @RequestMapping(value = "/login.html")
@@ -84,11 +85,18 @@ public class PageController {
     }
 
     @RequestMapping(value = "/detail.html")
-    public String detail(HttpSession session){
+    public String detail(HttpSession session,Model model,
+                         @RequestParam("goodId")int goodId){
         User user = (User)session.getAttribute("user");
         if(user == null){
             return "redirect:/login.html";
         }else{
+            Good good = goodService.getGoodById(goodId);
+            model.addAttribute("good",good);
+            String game = gameService.getGameById(good.getGoodsGame()).getGameName();
+            model.addAttribute("game",game);
+            User seller = userService.getUserById(good.getGoodsSeller());
+            model.addAttribute("seller",seller);
             return "detail";
         }
     }

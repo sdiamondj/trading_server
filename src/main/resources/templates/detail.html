@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${target}+' 商品详情'"></title>
+    <title th:text="${good.goodsName}+' 详情'"></title>
     <script type="text/javascript" th:src="@{/layui.js}"></script>
     <link rel="stylesheet" th:href="@{/css/normal.css}"/>
     <link rel="stylesheet" th:href="@{/css/layui.css}"/>
@@ -53,27 +53,28 @@
 
 <div class="detailDiv">
     <div class="titleDiv">
-        <span class="goodTitle">测试用标题设置最长十个字</span>
+        <span class="goodTitle" th:text="${good.goodsName}"></span>
     </div>
     <hr style="height:10px;border:none;border-top:10px groove skyblue;position: relative;top: -20px;"/>
     <div class="detailImage">
-        <img src="image/goods.jpg" style="width: 450px;height: 400px;">
+        <img th:src="'image/good/'+${good.goodsPicture}" style="width: 450px;height: 400px;">
     </div>
     <div class="priceDiv">
         <i class="layui-icon layui-icon-rmb" style="font-size:50px;"></i>
-        999
+        <span th:text="${good.goodsPrice}"></span>
     </div>
     <div class="intDiv">
         <div class="gameServerDiv">
-            所属游戏/区服:<span>英雄联盟/黑色玫瑰</span>
+            所属游戏/区服:<span th:text="${game}"></span>/
+            <span th:text="${good.goodsGameServer}"></span>
         </div>
         <div class="timeDiv">
             商品更新时间:
-            <span>2019-03-23 13:33:14</span>
+            <span th:text="${good.goodsUpdateTime}"></span>
         </div>
         <div class="introduceDiv">
             商品简介:
-            <span>一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</span>
+            <span th:text="${good.goodsDescription}"></span>
         </div>
     </div>
     <div class="buttonDiv">
@@ -85,9 +86,9 @@
 </div>
 
 <div class="sellerDiv">
-    <div class="sellerIn">卖家手机号:<span>15797898656</span></div>
-    <div class="sellerIn">卖家昵称:<span>是DJ啊啊啊啊a</span></div>
-    <div class="sellerIn">卖家注册时间:<span>2020-01-01 11:11:11</span></div>
+    <div class="sellerIn">卖家手机号:<span id="phoneSpan" th:text="${seller.userPhone}"></span></div>
+    <div class="sellerIn">卖家昵称:<span th:text="${seller.userNickname}"></span></div>
+    <div class="sellerIn">卖家注册时间:<span th:text="${seller.userRegisterTime}"></span></div>
 
 </div>
 </div>
@@ -101,6 +102,24 @@
             layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
         });
     }
+</script>
+<script>
+    var phone = document.getElementById("phoneSpan").innerText;
+    var str = phone.split('');
+    if(phone.length > 7){
+        for(var i = 3; i < phone.length - 4; i++){
+            str[i] = '*';
+        }
+    }else if(phone.length > 4){
+        for(var i = 2; i < phone.length - 2; i++){
+            str[i] = '*';
+        }
+    }else if(phone.length > 2){
+        for(var i = 1; i < phone.length -1 ; i++){
+            str[i] = '*';
+        }
+    }
+    document.getElementById("phoneSpan").innerHTML = str.join('');
 </script>
 
 

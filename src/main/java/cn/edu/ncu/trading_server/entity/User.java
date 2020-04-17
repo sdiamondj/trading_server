@@ -15,7 +15,7 @@ public class User {
 
     private String userPassword;
 
-    private Date userRegisterTime;
+    private String userRegisterTime;
 
     public Integer getUserId() {
         return userId;
@@ -65,11 +65,11 @@ public class User {
         this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
-    public Date getUserRegisterTime() {
+    public String getUserRegisterTime() {
         return userRegisterTime;
     }
 
-    public void setUserRegisterTime(Date userRegisterTime) {
-        this.userRegisterTime = userRegisterTime;
+    public void setUserRegisterTime(String userRegisterTime) {
+        this.userRegisterTime = userRegisterTime == null ? null : userRegisterTime.trim();
     }
 }

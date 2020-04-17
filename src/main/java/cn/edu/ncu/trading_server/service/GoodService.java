@@ -60,6 +60,10 @@ public class GoodService {
         return myList;
     }
 
+    public Good getGoodById(int goodId){
+        return goodMapper.selectByPrimaryKey(goodId);
+    }
+
 
 
 }
