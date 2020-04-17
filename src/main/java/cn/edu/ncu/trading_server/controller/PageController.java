@@ -72,7 +72,7 @@ public class PageController {
         }
     }
 
-    @RequestMapping(value = "getTable")
+    @RequestMapping(value = "/getTable")
     @ResponseBody
     public String getTable(@RequestParam(required = false,defaultValue = "1")int page,
                            @RequestParam(required = false,defaultValue = "10")int limit,
@@ -81,5 +81,15 @@ public class PageController {
         int count = goodService.getCounts();
         GoodVO goodVO = new GoodVO(0,"无",count,list );
         return JSON.toJSONString(goodVO);
+    }
+
+    @RequestMapping(value = "/detail.html")
+    public String detail(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }else{
+            return "detail";
+        }
     }
 }

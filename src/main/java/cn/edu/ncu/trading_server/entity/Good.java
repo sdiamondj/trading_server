@@ -22,6 +22,8 @@ public class Good {
 
     private String goodsDescription;
 
+    private String goodsPicture;
+
     public Integer getGoodsId() {
         return goodsId;
     }
@@ -92,5 +94,13 @@ public class Good {
 
     public void setGoodsDescription(String goodsDescription) {
         this.goodsDescription = goodsDescription == null ? null : goodsDescription.trim();
+    }
+
+    public String getGoodsPicture() {
+        return goodsPicture;
+    }
+
+    public void setGoodsPicture(String goodsPicture) {
+        this.goodsPicture = goodsPicture == null ? null : goodsPicture.trim();
     }
 }

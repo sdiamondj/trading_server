@@ -190,3 +190,99 @@ table tbody th{
 	left: 200px;
 	top: -80px;
 }
+.detailDiv{
+	position: relative;
+	width: 1200px;
+	height: 700px;
+	left: 140px;
+	top:-120px;
+}
+.titleDiv{
+	position: relative;
+	width: 1000px;
+	height: 100px;
+
+}
+.goodTitle{
+	font-size:40px;
+	color: blue;
+	font-family: "times";
+	font-weight:bolder;
+	position: relative;
+	left:100px;
+	top: 20px;
+}
+.detailImage{
+	position: relative;
+	width: 450px;
+	height: 400px;
+	left: 50px;
+	border: 1px solid;
+}
+.priceDiv{
+	position: relative;
+	width: 400px;
+	height: 100px;
+	left: 550px;
+	top: -400px;
+	font-size:60px;
+	color: orange;
+}
+.intDiv{
+	position: relative;
+	width: 600px;
+	height: 300px;
+	top: -400px;
+	left: 550px;
+	background: #FFF0F5;
+}
+.gameServerDiv{
+	position: relative;
+	width: 580px;
+	height: 50px;
+	font-size:30px;
+	top: 10px;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+	color: grey;
+}
+.timeDiv{
+	position: relative;
+	width: 580px;
+	height: 50px;
+	font-size:30px;
+	top: 10px;
+	color: grey;
+}
+.introduceDiv{
+	position: relative;
+	width: 600px;
+	height: 190px;
+	top: 10px;
+	font-size:22px;
+	color: #696969;
+}
+.buttonDiv{
+	position: relative;
+	width: 400px;
+	height: 100px;
+	left: 450px;
+	top: -350px;
+}
+.sellerDiv{
+	position: relative;
+	width: 400px;
+	height: 140px;
+	top: -880px;
+	left: 900px;
+	font-size:22px;
+	color: 	#2F4F4F;
+	border: 1px solid yellow;
+}
+.sellerIn{
+	position: relative;
+	width: 500px;
+	height: 40px;
+	top: 10px;
+}

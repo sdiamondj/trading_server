@@ -12,13 +12,13 @@
 
 <ul class="layui-nav">
     <li class="layui-nav-item">
-        <a href="/index.html">南昌大学游戏交易平台首页</a>
+        <a href="/index.html"><i class="layui-icon layui-icon-home"></i>南昌大学游戏交易平台首页</a>
     </li>
     <li class="layui-nav-item">
         <a href="">管理员入口</a>
     </li>
     <li class="layui-nav-item">
-        <a href="http://www.ncu.edu.cn/">友情链接-南昌大学首页</a>
+        <a href="http://www.ncu.edu.cn/" target="_blank">友情链接-南昌大学首页</a>
     </li>
     <li class="layui-nav-item">
         <a href="/search.html">我要购买</a>
@@ -27,10 +27,10 @@
         <a href="">我要出售</a>
     </li>
     <li class="layui-nav-item">
-        <a href="">联系客服</a>
+        <a href="javascript:come();"><i class="layui-icon layui-icon-service"></i>联系客服</a>
     </li>
     <li class="layui-nav-item" lay-unselect="">
-        <a href="javascript:;"><img src="image/logo.png" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
+        <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
         <dl class="layui-nav-child">
             <dd><a href="javascript:;">个人资料</a></dd>
             <dd><a href="javascript:;">我的订单</a></dd>
@@ -49,6 +49,8 @@
         </div>
         <p class="smallWord">——中国网游新平台</p>
     </div>
+
+
 
     <div class="searchDiv">
         <i class="layui-icon layui-icon-search" style="font-size:40px;position: relative;top: 70px;left: 20px;"></i>
@@ -187,6 +189,14 @@
 
 
 <script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    function come() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
+        });
+    }
+</script>
 
 
 </body>

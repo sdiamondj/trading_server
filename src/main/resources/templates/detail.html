@@ -2,18 +2,10 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${target}+' 商品列表'"></title>
+    <title th:text="${target}+' 商品详情'"></title>
     <script type="text/javascript" th:src="@{/layui.js}"></script>
     <link rel="stylesheet" th:href="@{/css/normal.css}"/>
     <link rel="stylesheet" th:href="@{/css/layui.css}"/>
-
-    <style>
-        .layui-table-header th {
-            text-align: center;
-            font-size: 25px;
-        }
-    </style>
-
 </head>
 <body>
 <ul class="layui-nav">
@@ -44,60 +36,64 @@
         </dl>
     </li>
 </ul>
-
-
 <div class="total">
+
     <div class="bigLogoDiv">
         <img src="image/logo.png" class="bigLogo">
     </div>
 
     <div class="bigSearchDiv">
         <i class="layui-icon layui-icon-search" style="font-size:40px;position: relative;top: 70px;left: 20px;"></i>
-        <form action="/search.html" method="get">
-            <input type="text" name="target" placeholder="输入您要查找的游戏/商品名称或关键字"  class="layui-input" style="position: relative;width: 500px;height: 60px; left: 90px;top:20px;font-size: 25px;">
+        <form action="" method="get">
+            <input type="text" name="search" placeholder="输入您要查找的游戏/商品名称或关键字"  class="layui-input" style="position: relative;width: 500px;height: 60px; left: 90px;top:20px;font-size: 25px;">
             <input type="submit" class="layui-btn layui-btn-normal" value="搜索" style="position: relative;width: 150px;height: 60px;font-size:30px; left: 620px;top: -40px;" />
         </form>
     </div>
-    <div class="smallDiv">
-        <span class="firstSpan">以下是搜索 <span th:text="${target}" class="secondSpan"></span> 的在售商品</span>
-    </div>
 
-    <div class="tableDiv">
-        <table id="demo" lay-filter="test"></table>
+
+<div class="detailDiv">
+    <div class="titleDiv">
+        <span class="goodTitle">测试用标题设置最长十个字</span>
+    </div>
+    <hr style="height:10px;border:none;border-top:10px groove skyblue;position: relative;top: -20px;"/>
+    <div class="detailImage">
+        <img src="image/goods.jpg" style="width: 450px;height: 400px;">
+    </div>
+    <div class="priceDiv">
+        <i class="layui-icon layui-icon-rmb" style="font-size:50px;"></i>
+        999
+    </div>
+    <div class="intDiv">
+        <div class="gameServerDiv">
+            所属游戏/区服:<span>英雄联盟/黑色玫瑰</span>
+        </div>
+        <div class="timeDiv">
+            商品更新时间:
+            <span>2019-03-23 13:33:14</span>
+        </div>
+        <div class="introduceDiv">
+            商品简介:
+            <span>一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</span>
+        </div>
+    </div>
+    <div class="buttonDiv">
+        <form action="" method="post">
+            <input type="submit" class="layui-btn layui-btn-normal" value="立即购买" style="width: 300px;height: 80px;font-size:35px;">
+        </form>
     </div>
 
 </div>
 
+<div class="sellerDiv">
+    <div class="sellerIn">卖家手机号:<span>15797898656</span></div>
+    <div class="sellerIn">卖家昵称:<span>是DJ啊啊啊啊a</span></div>
+    <div class="sellerIn">卖家注册时间:<span>2020-01-01 11:11:11</span></div>
+
+</div>
+</div>
+
+
 <script type="text/javascript" th:src="@{/layui.all.js}"></script>
-
-<script th:inline="javascript">
-    layui.use('table', function(){
-        var table = layui.table;
-
-        //第一个实例
-        table.render({
-            elem: '#demo'
-            ,height: 'full-100'
-            ,url: '/getTable' //数据接口
-            ,page: true //开启分页
-            ,where:{target:'[(${target})]'}
-            ,cols: [
-                [ //表头
-                {field:'goodsName', width:250,style:'color:#007DDB;font-size:20px;',templet: '#name',title:'商品名称'}
-                ,{field:'goodsGame', width:150,style:'font-size:20px;',title:'所属游戏'}
-                ,{field:'goodsServer', width:200,style:'font-size:20px;',title:'所属服务器'}
-                ,{field:'goodsSeller',width:180,style:'font-size:20px;',title:'卖家昵称'}
-                ,{field:'goodsUpdateTime',width:220,style:'font-size:20px;',title:'商品更新时间'}
-                ,{field:'goodsPrice',width:175,sort: true,style:'color:orange;font-size:28px;',title:'价格'}
-                ]
-            ]
-        });
-    });
-</script>
-
-<script type="text/html" id="name">
-    <a href="http://www.baidu.com" class="layui-table-link" >{{d.goodsName}}</a>
-</script>
 <script>
     function come() {
         layui.use('layer', function(){
@@ -106,6 +102,7 @@
         });
     }
 </script>
+
 
 </body>
 </html>

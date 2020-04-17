@@ -1,167 +1,179 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.ncu.trading_server.mapper.GoodMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.ncu.trading_server.entity.Good" >
-    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
-    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
-    <result column="goods_game" property="goodsGame" jdbcType="INTEGER" />
-    <result column="goods_seller" property="goodsSeller" jdbcType="INTEGER" />
-    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
-    <result column="goods_state" property="goodsState" jdbcType="SMALLINT" />
-    <result column="goods_game_server" property="goodsGameServer" jdbcType="VARCHAR" />
-    <result column="goods_update_time" property="goodsUpdateTime" jdbcType="TIMESTAMP" />
-    <result column="goods_description" property="goodsDescription" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    goods_id, goods_name, goods_game, goods_seller, goods_price, goods_state, goods_game_server, 
-    goods_update_time, goods_description
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods
-    where goods_id = #{goodsId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_goods
-    where goods_id = #{goodsId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="cn.edu.ncu.trading_server.entity.Good" >
-    insert into t_goods (goods_id, goods_name, goods_game, 
-      goods_seller, goods_price, goods_state, 
-      goods_game_server, goods_update_time, goods_description
-      )
-    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsGame,jdbcType=INTEGER}, 
-      #{goodsSeller,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsState,jdbcType=SMALLINT}, 
-      #{goodsGameServer,jdbcType=VARCHAR}, #{goodsUpdateTime,jdbcType=TIMESTAMP}, #{goodsDescription,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="cn.edu.ncu.trading_server.entity.Good" >
-    insert into t_goods
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="goodsId != null" >
-        goods_id,
-      </if>
-      <if test="goodsName != null" >
-        goods_name,
-      </if>
-      <if test="goodsGame != null" >
-        goods_game,
-      </if>
-      <if test="goodsSeller != null" >
-        goods_seller,
-      </if>
-      <if test="goodsPrice != null" >
-        goods_price,
-      </if>
-      <if test="goodsState != null" >
-        goods_state,
-      </if>
-      <if test="goodsGameServer != null" >
-        goods_game_server,
-      </if>
-      <if test="goodsUpdateTime != null" >
-        goods_update_time,
-      </if>
-      <if test="goodsDescription != null" >
-        goods_description,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="goodsId != null" >
-        #{goodsId,jdbcType=INTEGER},
-      </if>
-      <if test="goodsName != null" >
-        #{goodsName,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsGame != null" >
-        #{goodsGame,jdbcType=INTEGER},
-      </if>
-      <if test="goodsSeller != null" >
-        #{goodsSeller,jdbcType=INTEGER},
-      </if>
-      <if test="goodsPrice != null" >
-        #{goodsPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsState != null" >
-        #{goodsState,jdbcType=SMALLINT},
-      </if>
-      <if test="goodsGameServer != null" >
-        #{goodsGameServer,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsUpdateTime != null" >
-        #{goodsUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="goodsDescription != null" >
-        #{goodsDescription,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ncu.trading_server.entity.Good" >
-    update t_goods
-    <set >
-      <if test="goodsName != null" >
-        goods_name = #{goodsName,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsGame != null" >
-        goods_game = #{goodsGame,jdbcType=INTEGER},
-      </if>
-      <if test="goodsSeller != null" >
-        goods_seller = #{goodsSeller,jdbcType=INTEGER},
-      </if>
-      <if test="goodsPrice != null" >
-        goods_price = #{goodsPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsState != null" >
-        goods_state = #{goodsState,jdbcType=SMALLINT},
-      </if>
-      <if test="goodsGameServer != null" >
-        goods_game_server = #{goodsGameServer,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsUpdateTime != null" >
-        goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="goodsDescription != null" >
-        goods_description = #{goodsDescription,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where goods_id = #{goodsId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.ncu.trading_server.entity.Good" >
-    update t_goods
-    set goods_name = #{goodsName,jdbcType=VARCHAR},
-      goods_game = #{goodsGame,jdbcType=INTEGER},
-      goods_seller = #{goodsSeller,jdbcType=INTEGER},
-      goods_price = #{goodsPrice,jdbcType=DECIMAL},
-      goods_state = #{goodsState,jdbcType=SMALLINT},
-      goods_game_server = #{goodsGameServer,jdbcType=VARCHAR},
-      goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
-      goods_description = #{goodsDescription,jdbcType=VARCHAR}
-    where goods_id = #{goodsId,jdbcType=INTEGER}
-  </update>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_goods
-  </select>
-  <select id="selectByGame" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List"/>
-    from t_goods
-    where goods_game = #{gameId,jdbcType=INTEGER}
-    and goods_state = 1
-  </select>
-  <select id="selectByTarget" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    <include refid="Base_Column_List"/>
-    from t_goods
-    where goods_name like CONCAT(CONCAT('%',#{target}),'%')
-    and goods_state = 1
-  </select>
-  <select id="selectAllCanBuy" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_goods
-    where goods_state = 1
-  </select>
+<mapper namespace="cn.edu.ncu.trading_server.mapper.GoodMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.ncu.trading_server.entity.Good">
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_game" property="goodsGame" jdbcType="INTEGER"/>
+        <result column="goods_seller" property="goodsSeller" jdbcType="INTEGER"/>
+        <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL"/>
+        <result column="goods_state" property="goodsState" jdbcType="SMALLINT"/>
+        <result column="goods_game_server" property="goodsGameServer" jdbcType="VARCHAR"/>
+        <result column="goods_update_time" property="goodsUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_description" property="goodsDescription" jdbcType="VARCHAR"/>
+        <result column="goods_picture" property="goodsPicture" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        goods_id, goods_name, goods_game, goods_seller, goods_price, goods_state, goods_game_server,
+    goods_update_time, goods_description, goods_picture
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_goods
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.edu.ncu.trading_server.entity.Good">
+        insert into t_goods (goods_id, goods_name, goods_game,
+                             goods_seller, goods_price, goods_state,
+                             goods_game_server, goods_update_time, goods_description, goods_picture)
+        values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsGame,jdbcType=INTEGER},
+                #{goodsSeller,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsState,jdbcType=SMALLINT},
+                #{goodsGameServer,jdbcType=VARCHAR}, #{goodsUpdateTime,jdbcType=TIMESTAMP},
+                #{goodsDescription,jdbcType=VARCHAR},
+                #{goodsPicture,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.edu.ncu.trading_server.entity.Good">
+        insert into t_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsGame != null">
+                goods_game,
+            </if>
+            <if test="goodsSeller != null">
+                goods_seller,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="goodsState != null">
+                goods_state,
+            </if>
+            <if test="goodsGameServer != null">
+                goods_game_server,
+            </if>
+            <if test="goodsUpdateTime != null">
+                goods_update_time,
+            </if>
+            <if test="goodsDescription != null">
+                goods_description,
+            </if>
+            <if test="goodsPicture != null">
+                goods_picture,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsGame != null">
+                #{goodsGame,jdbcType=INTEGER},
+            </if>
+            <if test="goodsSeller != null">
+                #{goodsSeller,jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsState != null">
+                #{goodsState,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsGameServer != null">
+                #{goodsGameServer,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsUpdateTime != null">
+                #{goodsUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsDescription != null">
+                #{goodsDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPicture != null">
+                #{goodsPicture,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ncu.trading_server.entity.Good">
+        update t_goods
+        <set>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsGame != null">
+                goods_game = #{goodsGame,jdbcType=INTEGER},
+            </if>
+            <if test="goodsSeller != null">
+                goods_seller = #{goodsSeller,jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsState != null">
+                goods_state = #{goodsState,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsGameServer != null">
+                goods_game_server = #{goodsGameServer,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsUpdateTime != null">
+                goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsDescription != null">
+                goods_description = #{goodsDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPicture != null">
+                goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.edu.ncu.trading_server.entity.Good">
+        update t_goods
+        set goods_name        = #{goodsName,jdbcType=VARCHAR},
+            goods_game        = #{goodsGame,jdbcType=INTEGER},
+            goods_seller      = #{goodsSeller,jdbcType=INTEGER},
+            goods_price       = #{goodsPrice,jdbcType=DECIMAL},
+            goods_state       = #{goodsState,jdbcType=SMALLINT},
+            goods_game_server = #{goodsGameServer,jdbcType=VARCHAR},
+            goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
+            goods_description = #{goodsDescription,jdbcType=VARCHAR},
+            goods_picture     = #{goodsPicture,jdbcType=VARCHAR}
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+    </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods
+    </select>
+    <select id="selectByGame" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods
+        where goods_game = #{gameId,jdbcType=INTEGER}
+        and goods_state = 1
+    </select>
+    <select id="selectByTarget" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods
+        where goods_name like CONCAT(CONCAT('%',#{target}),'%')
+        and goods_state = 1
+    </select>
+    <select id="selectAllCanBuy" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods
+        where goods_state = 1
+    </select>
 </mapper>
