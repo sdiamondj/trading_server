@@ -286,3 +286,16 @@ table tbody th{
 	height: 40px;
 	top: 10px;
 }
+.tips{
+	position: relative;
+	font-size:25px;
+	color: red;
+	left: 100px;
+	top: 50px;
+}
+.confirmDiv{
+	position: relative;
+	width: 100%;
+	height: 300px;
+	top: 40px;
+}

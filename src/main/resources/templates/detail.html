@@ -78,7 +78,8 @@
         </div>
     </div>
     <div class="buttonDiv">
-        <form action="" method="post">
+        <form action="/placeOrder.html" method="get">
+            <input type="hidden" name="goodId" th:value="${good.goodsId}">
             <input type="submit" class="layui-btn layui-btn-normal" value="立即购买" style="width: 300px;height: 80px;font-size:35px;">
         </form>
     </div>

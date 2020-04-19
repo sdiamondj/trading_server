@@ -86,18 +86,40 @@ public class PageController {
 
     @RequestMapping(value = "/detail.html")
     public String detail(HttpSession session,Model model,
-                         @RequestParam("goodId")int goodId){
+                         @RequestParam(value = "goodId",required = false,defaultValue = "-1")int goodId){
         User user = (User)session.getAttribute("user");
         if(user == null){
             return "redirect:/login.html";
         }else{
+            if(goodId == -1){
+                return "redirect:/index.html";
+            }
+            Good good = goodService.getGoodById(goodId);
+            model.addAttribute("good",good);
+            User seller = userService.getUserById(good.getGoodsSeller());
+            model.addAttribute("seller",seller);
+            String game = gameService.getGameById(good.getGoodsGame()).getGameName();
+            model.addAttribute("game",game);
+            return "detail";
+        }
+    }
+
+    @RequestMapping(value = "/placeOrder.html")
+    public String placeOrder(HttpSession session,Model model,
+                             @RequestParam(value = "goodId",required = false,defaultValue = "-1")int goodId){
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            return "redirect:/login.html";
+        }else{
+            if(goodId == -1){
+                return "redirect:/index.html";
+            }
             Good good = goodService.getGoodById(goodId);
             model.addAttribute("good",good);
             String game = gameService.getGameById(good.getGoodsGame()).getGameName();
             model.addAttribute("game",game);
-            User seller = userService.getUserById(good.getGoodsSeller());
-            model.addAttribute("seller",seller);
-            return "detail";
+            return "placeOrder";
         }
     }
+
 }

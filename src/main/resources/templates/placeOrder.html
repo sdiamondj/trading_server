@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="确认订单信息"></title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/normal.css}"/>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+</head>
+<body>
+
+<ul class="layui-nav">
+    <li class="layui-nav-item">
+        <a href="/index.html"><i class="layui-icon layui-icon-home"></i>南昌大学游戏交易平台首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">管理员入口</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://www.ncu.edu.cn/" target="_blank">友情链接-南昌大学首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="/search.html">我要购买</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">我要出售</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:come();"><i class="layui-icon layui-icon-service"></i>联系客服</a>
+    </li>
+    <li class="layui-nav-item" lay-unselect="">
+        <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">个人资料</a></dd>
+            <dd><a href="javascript:;">我的订单</a></dd>
+            <dd><a href="javascript:;">退出登录</a></dd>
+        </dl>
+    </li>
+</ul>
+
+<div class="total">
+    <span class="tips">tips:请确认以下信息,以免造成不必要的麻烦,谢谢!</span>
+    <hr style="height:10px;border:none;border-top:10px groove skyblue;position: relative;top: 50px;"/>
+    <div class="confirmDiv"></div>
+    <form action="" method="post">
+        <table style="position: relative;top: -250px;left: 100px;width: 1300px;">
+            <thead>
+            <tr>
+                <th style="width: 250px;">商品图片</th>
+                <th style="width: 300px;">商品名称</th>
+                <th style="width: 500px;">所属游戏/区服</th>
+                <th>商品总价</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="font-size:25px;height: 200px;">
+                <th><img th:src="'image/good/'+${good.goodsPicture}" style="width: 180px;height: 180px;"></th>
+                <th><span th:text="${good.goodsName}"></span></th>
+                <th><span th:text="${game}"></span>/<span th:text="${good.goodsGameServer}"></span></th>
+                <th style="font-size:35px;color: orange;"><span th:text="${good.goodsPrice}"></span></th>
+            </tr>
+            </tbody>
+        </table>
+        <hr style="height:10px;border:none;border-top:10px groove skyblue;position: relative;top: -250px;"/>
+        <input type="submit" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -150px;">
+    </form>
+</div>
+
+
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    function come() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
+        });
+    }
+</script>
+
+
+</body>
+</html>
