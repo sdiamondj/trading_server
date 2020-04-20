@@ -28,4 +28,7 @@ public interface GoodMapper {
     List<Good> selectByTarget(String target);
 
     List<Good> selectAllCanBuy();
+
+    List<Good> selectBySeller(int seller);
+
 }

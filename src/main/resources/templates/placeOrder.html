@@ -32,8 +32,8 @@
         <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
         <dl class="layui-nav-child">
             <dd><a href="javascript:;">个人资料</a></dd>
-            <dd><a href="javascript:;">我的订单</a></dd>
-            <dd><a href="javascript:;">退出登录</a></dd>
+            <dd><a href="/order.html">我的订单</a></dd>
+            <dd><a href="/user/logout">退出登录</a></dd>
         </dl>
     </li>
 </ul>
@@ -42,7 +42,7 @@
     <span class="tips">tips:请确认以下信息,以免造成不必要的麻烦,谢谢!</span>
     <hr style="height:10px;border:none;border-top:10px groove skyblue;position: relative;top: 50px;"/>
     <div class="confirmDiv"></div>
-    <form action="" method="post">
+    <form action="/order/submit" method="post" >
         <table style="position: relative;top: -250px;left: 100px;width: 1300px;">
             <thead>
             <tr>
@@ -62,7 +62,11 @@
             </tbody>
         </table>
         <hr style="height:10px;border:none;border-top:10px groove skyblue;position: relative;top: -250px;"/>
-        <input type="submit" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -150px;">
+        <div style="width: 380px;height: 100px;position: relative;top: -220px;left:550px;">
+            <input type="text" name="account" required lay-verify="required" placeholder="请输入收货账号游戏内ID" autocomplete="off" class="layui-input" maxlength="20" style="height: 70px;font-size: 28px;">
+            <input type="hidden" name="goodId" th:value="${good.goodsId}">
+        </div>
+        <input type="submit"  data-method="notice" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -200px;">
     </form>
 </div>
 

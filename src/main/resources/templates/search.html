@@ -39,8 +39,8 @@
         <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
         <dl class="layui-nav-child">
             <dd><a href="javascript:;">个人资料</a></dd>
-            <dd><a href="javascript:;">我的订单</a></dd>
-            <dd><a href="javascript:;">退出登录</a></dd>
+            <dd><a href="/order.html">我的订单</a></dd>
+            <dd><a href="/user/logout">退出登录</a></dd>
         </dl>
     </li>
 </ul>

@@ -64,6 +64,13 @@ public class GoodService {
         return goodMapper.selectByPrimaryKey(goodId);
     }
 
+    public int changeState(int goodId,short state){
+        Good good = new Good();
+        good.setGoodsId(goodId);
+        good.setGoodsState(state);
+        return goodMapper.updateByPrimaryKeySelective(good);
+    }
+
 
 
 }

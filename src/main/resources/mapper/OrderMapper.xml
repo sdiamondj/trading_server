@@ -8,9 +8,11 @@
     <result column="order_state" property="orderState" jdbcType="SMALLINT" />
     <result column="order_create_time" property="orderCreateTime" jdbcType="TIMESTAMP" />
     <result column="order_update_time" property="orderUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="order_receiving_account" property="orderReceivingAccount" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    order_id, order_buyer, order_goods, order_state, order_create_time, order_update_time
+    order_id, order_buyer, order_goods, order_state, order_create_time, order_update_time, 
+    order_receiving_account
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,11 +26,11 @@
   </delete>
   <insert id="insert" parameterType="cn.edu.ncu.trading_server.entity.Order" >
     insert into t_order (order_id, order_buyer, order_goods, 
-      order_state, order_create_time, order_update_time
-      )
+      order_state, order_create_time, order_update_time, 
+      order_receiving_account)
     values (#{orderId,jdbcType=INTEGER}, #{orderBuyer,jdbcType=INTEGER}, #{orderGoods,jdbcType=INTEGER}, 
-      #{orderState,jdbcType=SMALLINT}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderUpdateTime,jdbcType=TIMESTAMP}
-      )
+      #{orderState,jdbcType=SMALLINT}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderUpdateTime,jdbcType=TIMESTAMP}, 
+      #{orderReceivingAccount,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.edu.ncu.trading_server.entity.Order" >
     insert into t_order
@@ -51,6 +53,9 @@
       <if test="orderUpdateTime != null" >
         order_update_time,
       </if>
+      <if test="orderReceivingAccount != null" >
+        order_receiving_account,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
@@ -70,6 +75,9 @@
       </if>
       <if test="orderUpdateTime != null" >
         #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderReceivingAccount != null" >
+        #{orderReceivingAccount,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +99,9 @@
       <if test="orderUpdateTime != null" >
         order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="orderReceivingAccount != null" >
+        order_receiving_account = #{orderReceivingAccount,jdbcType=VARCHAR},
+      </if>
     </set>
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
@@ -100,7 +111,20 @@
       order_goods = #{orderGoods,jdbcType=INTEGER},
       order_state = #{orderState,jdbcType=SMALLINT},
       order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
-      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP}
+      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      order_receiving_account = #{orderReceivingAccount,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
+  <select id="getOrderByBuyer" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_buyer = #{buyer,jdbcType=INTEGER}
+  </select>
+  <select id="getOrderByGoodId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_goods = #{goodId,jdbcType=INTEGER}
+  </select>
 </mapper>

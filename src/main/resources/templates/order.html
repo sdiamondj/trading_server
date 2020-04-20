@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>我的订单</title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/normal.css}"/>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+</head>
+<body>
+<ul class="layui-nav">
+    <li class="layui-nav-item">
+        <a href="/index.html"><i class="layui-icon layui-icon-home"></i>南昌大学游戏交易平台首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">管理员入口</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://www.ncu.edu.cn/" target="_blank">友情链接-南昌大学首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="/search.html">我要购买</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">我要出售</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:come();"><i class="layui-icon layui-icon-service"></i>联系客服</a>
+    </li>
+    <li class="layui-nav-item" lay-unselect="">
+        <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">个人资料</a></dd>
+            <dd><a href="/order.html">我的订单</a></dd>
+            <dd><a href="/user/logout">退出登录</a></dd>
+        </dl>
+    </li>
+</ul>
+
+<div class="total">
+    <div class="layui-tab layui-tab-card" style="width: 1400px;position: relative;left: 50px;top: 50px;">
+        <ul class="layui-tab-title">
+            <li class="layui-this">我的买家订单</li>
+            <li>我的卖家订单</li>
+        </ul>
+        <div class="layui-tab-content" style="height: auto;">
+            <div class="layui-tab-item layui-show">
+            <table style="text-align: center;width: 1380px;">
+                <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>订单商品</th>
+                    <th>订单创建时间</th>
+                    <th>订单更新时间</th>
+                    <th>订单价格</th>
+                    <th>订单状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody style="font-size: 25px;">
+                <tr th:each="buyOrder:${buyOrders}">
+                    <th th:text="${buyOrder.orderId}"></th>
+                    <th th:text="${buyOrder.goodName}"></th>
+                    <th th:text="${buyOrder.orderCreateTime}"></th>
+                    <th th:text="${buyOrder.orderUpdateTime}"></th>
+                    <th class="price" th:text="${buyOrder.orderPrice}"></th>
+                    <th th:text="${buyOrder.orderState}"></th>
+                    <th><button class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;">取消订单</button></th>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="layui-tab-item">
+            <table style="text-align: center;width: 1380px;">
+                <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>订单商品</th>
+                    <th>订单创建时间</th>
+                    <th>订单更新时间</th>
+                    <th>订单价格</th>
+                    <th>订单状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody style="font-size: 25px;">
+                <tr>
+                    <th>000000011</th>
+                    <th>王者荣耀的商品吗?</th>
+                    <th>2029-01-12 12:33:33</th>
+                    <th>2029-01-12 12:33:33</th>
+                    <th class="price">33.33</th>
+                    <th>已付款,等待卖家发货</th>
+                    <th><button class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;">取消订单</button></th>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    function come() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -5,16 +5,14 @@ import cn.edu.ncu.trading_server.entity.Good;
 import cn.edu.ncu.trading_server.entity.User;
 import cn.edu.ncu.trading_server.service.GameService;
 import cn.edu.ncu.trading_server.service.GoodService;
+import cn.edu.ncu.trading_server.service.OrderService;
 import cn.edu.ncu.trading_server.service.UserService;
-import cn.edu.ncu.trading_server.vo.GoodVO;
-import cn.edu.ncu.trading_server.vo.SearchGood;
-import com.alibaba.fastjson.JSON;
+import cn.edu.ncu.trading_server.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -29,6 +27,8 @@ public class PageController {
     private GoodService goodService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
 
     @RequestMapping(value = "/login.html")
@@ -39,6 +39,11 @@ public class PageController {
     @RequestMapping(value = "/register.html")
     public String registerHtml(){
         return "register";
+    }
+
+    @RequestMapping(value = "/404.html")
+    public String error(){
+        return "error/404";
     }
 
     @RequestMapping(value = "/index.html")
@@ -73,16 +78,6 @@ public class PageController {
         }
     }
 
-    @RequestMapping(value = "/getTable")
-    @ResponseBody
-    public String getTable(@RequestParam(required = false,defaultValue = "1")int page,
-                           @RequestParam(required = false,defaultValue = "10")int limit,
-                           @RequestParam(required = false,defaultValue = "")String target){
-        List<SearchGood> list = goodService.getGoods(page,limit,target);
-        int count = goodService.getCounts();
-        GoodVO goodVO = new GoodVO(0,"无",count,list );
-        return JSON.toJSONString(goodVO);
-    }
 
     @RequestMapping(value = "/detail.html")
     public String detail(HttpSession session,Model model,
@@ -121,5 +116,23 @@ public class PageController {
             return "placeOrder";
         }
     }
+
+    @RequestMapping(value = "/order.html")
+    public String order(HttpSession session,Model model){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }else{
+            List<OrderVO> buyOrders = orderService.getAllBuyOrdersVO(user.getUserId());
+            model.addAttribute("buyOrders",buyOrders);
+
+            List<OrderVO> sellOrders = orderService.getAllSellOrdersVO(user.getUserId());
+            model.addAttribute("sellOrders",sellOrders);
+
+            return "order";
+        }
+    }
+
+
 
 }

@@ -299,3 +299,7 @@ table tbody th{
 	height: 300px;
 	top: 40px;
 }
+.price{
+	font-size: 40px;
+	color: orange;
+}

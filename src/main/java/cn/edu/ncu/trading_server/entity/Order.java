@@ -15,6 +15,8 @@ public class Order {
 
     private String orderUpdateTime;
 
+    private String orderReceivingAccount;
+
     public Integer getOrderId() {
         return orderId;
     }
@@ -61,5 +63,13 @@ public class Order {
 
     public void setOrderUpdateTime(String orderUpdateTime) {
         this.orderUpdateTime = orderUpdateTime == null ? null : orderUpdateTime.trim();
+    }
+
+    public String getOrderReceivingAccount() {
+        return orderReceivingAccount;
+    }
+
+    public void setOrderReceivingAccount(String orderReceivingAccount) {
+        this.orderReceivingAccount = orderReceivingAccount == null ? null : orderReceivingAccount.trim();
     }
 }
