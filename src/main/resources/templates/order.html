@@ -48,24 +48,38 @@
             <table style="text-align: center;width: 1380px;">
                 <thead>
                 <tr>
-                    <th>订单编号</th>
-                    <th>订单商品</th>
-                    <th>订单创建时间</th>
-                    <th>订单更新时间</th>
-                    <th>订单价格</th>
-                    <th>订单状态</th>
+                    <th style="width: 130px;">订单编号</th>
+                    <th style="width: 130px;">订单商品</th>
+                    <th style="width: 220px;">所属游戏/区服/收货账号</th>
+                    <th style="width: 130px;">订单创建时间</th>
+                    <th style="width: 130px;">订单更新时间</th>
+                    <th style="width: 160px;">订单价格</th>
+                    <th style="width: 130px;">订单状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody style="font-size: 25px;">
                 <tr th:each="buyOrder:${buyOrders}">
+                    <form action="/order/change" method="post">
+                        <input type="hidden" name="type" value="0">
+                        <input type="hidden" th:value="${buyOrder.orderId}" name="orderId">
+                        <input type="hidden" th:value="${buyOrder.orderState}" name="orderState">
                     <th th:text="${buyOrder.orderId}"></th>
                     <th th:text="${buyOrder.goodName}"></th>
+                    <th th:text="${buyOrder.game}+' / '+${buyOrder.server}+' / '+${buyOrder.account}"></th>
                     <th th:text="${buyOrder.orderCreateTime}"></th>
                     <th th:text="${buyOrder.orderUpdateTime}"></th>
                     <th class="price" th:text="${buyOrder.orderPrice}"></th>
-                    <th th:text="${buyOrder.orderState}"></th>
-                    <th><button class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;">取消订单</button></th>
+                    <th th:if="${buyOrder.orderState} eq '0'">待买家付款</th>
+                    <th th:if="${buyOrder.orderState} eq '1'">买家已付款,待卖家发货</th>
+                    <th th:if="${buyOrder.orderState} eq '2'">卖家已发货,待买家确认</th>
+                    <th th:if="${buyOrder.orderState} eq '3'">买家已确认收货</th>
+                    <th th:if="${buyOrder.orderState} eq '4'">订单已完成</th>
+                    <th th:if="${buyOrder.orderState} eq '5'">订单已取消</th>
+                    <th th:if="${buyOrder.orderState} eq '0' or ${buyOrder.orderState} eq '1' "><input type="submit" class="layui-btn layui-btn-warm layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;" value="取消订单" onclick="return confirm('您确定要取消吗?一经操作无法撤销哦!')"></th>
+                    <th th:if="${buyOrder.orderState} eq '2' "><input type="submit" class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;" value="确认收货" onclick="return confirm('确定已经收到货了吗?')"></th>
+                    <th th:if="${buyOrder.orderState} eq '3' or ${buyOrder.orderState} eq '4' or ${buyOrder.orderState} eq '5' "></th>
+                    </form>
                 </tr>
                 </tbody>
 
@@ -75,24 +89,39 @@
             <table style="text-align: center;width: 1380px;">
                 <thead>
                 <tr>
-                    <th>订单编号</th>
-                    <th>订单商品</th>
-                    <th>订单创建时间</th>
-                    <th>订单更新时间</th>
-                    <th>订单价格</th>
-                    <th>订单状态</th>
+                    <th style="width: 110px;">订单编号</th>
+                    <th style="width: 150px;">订单商品</th>
+                    <th style="width: 200px;">所属游戏/区服/收货账号</th>
+                    <th style="width: 140px;">订单创建时间</th>
+                    <th style="width: 140px;">订单更新时间</th>
+                    <th style="width: 150px;">订单价格</th>
+                    <th style="width: 150px;">实得金额</th>
+                    <th style="width: 150px;">订单状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody style="font-size: 25px;">
-                <tr>
-                    <th>000000011</th>
-                    <th>王者荣耀的商品吗?</th>
-                    <th>2029-01-12 12:33:33</th>
-                    <th>2029-01-12 12:33:33</th>
-                    <th class="price">33.33</th>
-                    <th>已付款,等待卖家发货</th>
-                    <th><button class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;">取消订单</button></th>
+                <tr th:each="sellOrder:${sellOrders}">
+                    <form action="/order/change" method="post">
+                        <input type="hidden" th:value="${sellOrder.orderId}" name="orderId">
+                        <input type="hidden" th:value="${sellOrder.orderState}" name="orderState">
+                    <th th:text="${sellOrder.orderId}"></th>
+                    <th th:text="${sellOrder.goodName}"></th>
+                    <th th:text="${sellOrder.game}+' / '+${sellOrder.server}+' / '+${sellOrder.account}"></th>
+                    <th th:text="${sellOrder.orderCreateTime}"></th>
+                    <th th:text="${sellOrder.orderUpdateTime}"></th>
+                    <th class="price" th:text="${sellOrder.orderPrice}"></th>
+                    <th id="priceTest" class="price" th:text="${#numbers.formatDecimal(sellOrder.orderPrice*0.95,1,'COMMA',2,'POINT')}"></th>
+                    <th th:if="${sellOrder.orderState} eq '0'">待买家付款</th>
+                    <th th:if="${sellOrder.orderState} eq '1'">买家已付款,待卖家发货</th>
+                    <th th:if="${sellOrder.orderState} eq '2'">卖家已发货,待买家确认</th>
+                    <th th:if="${sellOrder.orderState} eq '3'">待领取钱款</th>
+                    <th th:if="${sellOrder.orderState} eq '4'">订单已完成</th>
+                    <th th:if="${sellOrder.orderState} eq '5'">订单已取消</th>
+                    <th th:if="${sellOrder.orderState} eq '0' or ${sellOrder.orderState} eq '2' or ${sellOrder.orderState} eq '4' or ${sellOrder.orderState} eq '5' "></th>
+                    <th th:if="${sellOrder.orderState} eq '1' "><input type="submit" class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;" value="确定发货" onclick="return confirm('确定已经向买家指定账号发货了吗?')"></th>
+                    <th th:if="${sellOrder.orderState} eq '3'"><input type="submit" class="layui-btn layui-btn-normal layui-btn-radius" style="width: 110px;height: 60px;font-size:18px;" value="领取钱款" onclick="alert('成功领取该笔订单收益(平台收取5%手续费)')"></th>
+                    </form>
                 </tr>
                 </tbody>
 
@@ -111,6 +140,7 @@
         });
     }
 </script>
+
 
 </body>
 </html>

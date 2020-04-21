@@ -12,4 +12,7 @@ public class OrderVO {
     private String orderUpdateTime;
     private BigDecimal orderPrice;
     private Short orderState;
+    private String game;
+    private String server;
+    private String account;
 }

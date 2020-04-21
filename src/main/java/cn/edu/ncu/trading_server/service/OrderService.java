@@ -1,11 +1,12 @@
 package cn.edu.ncu.trading_server.service;
 
+import cn.edu.ncu.trading_server.entity.Game;
 import cn.edu.ncu.trading_server.entity.Good;
 import cn.edu.ncu.trading_server.entity.Order;
+import cn.edu.ncu.trading_server.mapper.GameMapper;
 import cn.edu.ncu.trading_server.mapper.GoodMapper;
 import cn.edu.ncu.trading_server.mapper.OrderMapper;
 import cn.edu.ncu.trading_server.vo.OrderVO;
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public class OrderService {
     private OrderMapper orderMapper;
     @Autowired
     private GoodMapper goodMapper;
+    @Autowired
+    private GameMapper gameMapper;
 
     public int submitOrder(int buyer,int goods,String account){
         Order order =new Order();
@@ -52,8 +55,31 @@ public class OrderService {
             orderVO.setOrderUpdateTime(order.getOrderUpdateTime());
             orderVO.setOrderPrice(good.getGoodsPrice());
             orderVO.setOrderState(order.getOrderState());
+            orderVO.setAccount(order.getOrderReceivingAccount());
+            Game game = gameMapper.selectByPrimaryKey(good.getGoodsGame());
+            orderVO.setGame(game.getGameName());
+            orderVO.setServer(good.getGoodsGameServer());
             orderVOS.add(orderVO);
         }
         return orderVOS;
+    }
+
+    public int changeState(int orderId,short orderState,int type){
+        Order order = new Order();
+        short i;
+        if(orderState == 0 ||  orderState == 5){
+            i = 5;
+        }else if(orderState == 1){
+            if(type == 0){
+                i = 5;
+            }else{
+                i = 2;
+            }
+        } else  {
+            i = (short)(orderState+1);
+        }
+        order.setOrderState(i);
+        order.setOrderId(orderId);
+        return orderMapper.updateByPrimaryKeySelective(order);
     }
 }

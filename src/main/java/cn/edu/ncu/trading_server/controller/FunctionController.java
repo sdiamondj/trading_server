@@ -98,4 +98,16 @@ public class FunctionController {
         GoodVO goodVO = new GoodVO(0,"无",count,list );
         return JSON.toJSONString(goodVO);
     }
+
+    @RequestMapping(value = "/order/change",method = RequestMethod.POST)
+    public String change(@RequestParam("orderId")int orderId,
+                         @RequestParam("orderState")short orderState,
+                         @RequestParam(value = "type",required = false,defaultValue = "1")int type){
+        int i = orderService.changeState(orderId,orderState,type);
+        if(i == 1){
+            return "redirect:/order.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
 }
