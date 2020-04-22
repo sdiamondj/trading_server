@@ -9,16 +9,23 @@ import cn.edu.ncu.trading_server.service.OrderService;
 import cn.edu.ncu.trading_server.service.UserService;
 import cn.edu.ncu.trading_server.vo.GoodVO;
 import cn.edu.ncu.trading_server.vo.SearchGood;
+import cn.edu.ncu.trading_server.vo.UploadFile;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
 
 @Controller
 public class FunctionController {
@@ -109,5 +116,25 @@ public class FunctionController {
         }else{
             return "redirect:/404.html";
         }
+    }
+
+    @RequestMapping(value = "/upload")
+    @ResponseBody
+    public JSONObject upload(@RequestParam(value = "file")MultipartFile file){
+        Map<String,Object> res = new HashMap<>();
+        try {
+            if(file != null){
+                List<UploadFile> list = new ArrayList<>();
+                UploadFile uploadFile = new UploadFile();
+                uploadFile.setSrc(file.getOriginalFilename());
+                list.add(uploadFile);
+                res.put("data",list);
+                res.put("code",1);
+                res.put("msg","");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  new JSONObject(res);
     }
 }

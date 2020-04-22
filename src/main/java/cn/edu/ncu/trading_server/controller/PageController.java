@@ -133,6 +133,16 @@ public class PageController {
         }
     }
 
+    @RequestMapping(value = "/self.html")
+    public String self(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }else{
+            return "self";
+        }
+    }
+
 
 
 }
