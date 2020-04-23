@@ -28,9 +28,9 @@
         <a href="javascript:come();"><i class="layui-icon layui-icon-service"></i>联系客服</a>
     </li>
     <li class="layui-nav-item" lay-unselect="">
-        <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
+        <a href="/self.html"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
         <dl class="layui-nav-child">
-            <dd><a href="javascript:;">个人资料</a></dd>
+            <dd><a href="/self.html">个人资料</a></dd>
             <dd><a href="/order.html">我的订单</a></dd>
             <dd><a href="/user/logout">退出登录</a></dd>
         </dl>
@@ -40,10 +40,45 @@
 <div class="total">
 
     <div class="selfDiv">
-        <div class="avatarDiv">
-            <img src="image/ddt.jpg" class="avatar" id="avatar">
-            <button type="button" class="layui-btn layui-btn-normal" id="upload" style="position: relative;top: 130px;left:-65px;width: 120px;height: 50px;font-size:18px;">更改头像</button>
-        </div>
+        <form action="/updateUser" method="post">
+            <div class="avatarDiv">
+                <img th:src="'image/'+${session.user.userAvatar}" class="avatar" id="avatar">
+                <input type="hidden" name="url" id="url">
+                <button type="button" class="layui-btn layui-btn-normal" id="upload" style="position: relative;top: 130px;left:-65px;width: 120px;height: 50px;font-size:18px;">更改头像</button>
+            </div>
+            <div class="dataDiv">
+                <div class="smallDataDiv">
+                    <span>手机号:</span>
+                    <div class="inputDiv"><input type="text" name="phone" readonly="readonly" th:value="${session.user.userPhone}" class="layui-input" maxlength="11"></div>
+                </div>
+                <div class="smallDataDiv">
+                    <span>昵&emsp;称:</span>
+                    <div class="inputDiv"><input type="text" name="nickname" readonly="readonly" th:value="${session.user.userNickname}" class="layui-input" maxlength="8" id="nickname"></div>
+                    <a href="javascript:void(0);" onclick="editNickname()" class="edit" id="editNickname"><i class="layui-icon layui-icon-edit" style="font-size: 35px;"></i></a>
+                </div>
+                <div class="smallDataDiv">
+                    <span>密&emsp;码:</span>
+                    <div class="inputDiv"><input type="password" name="password" readonly="readonly" th:value="${session.user.userPassword}" class="layui-input" id="password"></div>
+                    <a href="javascript:void(0);" onclick="editPassword()" id="editPassword" class="edit"><i class="layui-icon layui-icon-edit" style="font-size: 35px;"></i></a>
+                </div>
+                <div class="smallDataDiv">
+                    <span>性&emsp;别:</span>
+                    <div class="inputDiv">
+                        <input th:if="${session.user.userSex} eq '0'" type="radio" name="sex" value="0" checked="checked" style="width: 20px;height: 20px;"><span th:if="${session.user.userSex} eq '0'">保密</span>
+                        <input th:if="${session.user.userSex} eq '1' or ${session.user.userSex} eq '2'" type="radio" name="sex" value="0" style="width: 20px;height: 20px;"><span th:if="${session.user.userSex} eq '1' or ${session.user.userSex} eq '2'">保密</span>
+                        <input th:if="${session.user.userSex} eq '0'or ${session.user.userSex} eq '2'" type="radio" name="sex" value="1" style="width: 20px;height: 20px;"><span th:if="${session.user.userSex} eq '0'or ${session.user.userSex} eq '2'">男</span>
+                        <input th:if="${session.user.userSex} eq '1'" type="radio" name="sex" value="1" checked="checked" style="width: 20px;height: 20px;"><span th:if="${session.user.userSex} eq '1'">男</span>
+                        <input th:if="${session.user.userSex} eq '0' or ${session.user.userSex} eq '1'"  type="radio" name="sex" value="2" style="width: 20px;height: 20px;"><span th:if="${session.user.userSex} eq '0' or ${session.user.userSex} eq '1'">女</span>
+                        <input th:if="${session.user.userSex} eq '2'" type="radio" name="sex" value="1" checked="checked" style="width: 20px;height: 20px;"><span th:if="${session.user.userSex} eq '2'">女</span>
+                    </div>
+                </div>
+            </div>
+            <div class="registerTime">
+                <span>注册时间:</span>
+                <span th:text="${session.user.userRegisterTime}"></span>
+            </div>
+            <input type="submit" class="layui-btn layui-btn-normal" value="保存修改" style="width: 200px;height: 70px;font-size: 30px;position: relative;left: 500px;top: -150px;">
+        </form>
     </div>
 
 </div>
@@ -73,15 +108,28 @@
                 });
             }
             ,done: function(res){
+                document.getElementById("url").value=res.data[0].src;
+                //alert(res.data[0].src);
                 //上传完毕回调
-                alert("success"+res.code);
+                //alert("success"+res.code);
             }
             ,error: function(res){
                 //请求异常回调
-                alert("error"+res);
+                alert("上传图片失败,服务器异常!");
             }
         });
     });
+</script>
+<script type="text/javascript">
+    function editNickname(){
+        document.getElementById("nickname").readOnly=false;
+        document.getElementById("editNickname").hidden=true;
+    }
+    function editPassword(){
+        document.getElementById("password").readOnly=false;
+        document.getElementById("editPassword").hidden=true;
+    }
+
 </script>
 
 </body>

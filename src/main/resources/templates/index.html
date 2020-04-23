@@ -77,7 +77,7 @@
                     <div class="layui-row">
                         <div th:each="hot:${hot}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a th:href="'/search.html?target='+${hot.gameName}"><img th:src="'image/games/'+${hot.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${hot.gameName}"><img th:src="'image/'+${hot.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
                                     <a th:href="'/search.html?target='+${hot.gameName}"><span th:text="${hot.gameName}"></span></a>
                                 </div>
@@ -99,7 +99,7 @@
                     <div class="layui-row">
                         <div th:each="client:${client}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a th:href="'/search.html?target='+${client.gameName}"><img th:src="'image/games/'+${client.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${client.gameName}"><img th:src="'image/'+${client.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
                                     <a th:href="'/search.html?target='+${client.gameName}"><span th:text="${client.gameName}"></span></a>
                                 </div>
@@ -120,7 +120,7 @@
                     <div class="layui-row">
                         <div th:each="page:${page}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a th:href="'/search.html?target='+${page.gameName}"><img th:src="'image/games/'+${page.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${page.gameName}"><img th:src="'image/'+${page.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
                                     <a th:href="'/search.html?target='+${page.gameName}"><span th:text="${page.gameName}"></span></a>
                                 </div>
@@ -141,7 +141,7 @@
                     <div class="layui-row">
                         <div th:each="mobile:${mobile}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a th:href="'/search.html?target='+${mobile.gameName}"><img th:src="'image/games/'+${mobile.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${mobile.gameName}"><img th:src="'image/'+${mobile.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
                                     <a th:href="'/search.html?target='+${mobile.gameName}"><span th:text="${mobile.gameName}"></span></a>
                                 </div>
@@ -162,7 +162,7 @@
                     <div class="layui-row">
                         <div th:each="other:${other}">
                             <div class="layui-col-md2" style="height: 140px;">
-                                <a th:href="'/search.html?target='+${other.gameName}"><img th:src="'image/games/'+${other.gamePicture}" class="gameLogo"></a>
+                                <a th:href="'/search.html?target='+${other.gameName}"><img th:src="'image/'+${other.gamePicture}" class="gameLogo"></a>
                                 <div class="gameNameDiv">
                                     <a th:href="'/search.html?target='+${other.gameName}"><span th:text="${other.gameName}"></span></a>
                                 </div>

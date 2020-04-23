@@ -12,6 +12,7 @@ import cn.edu.ncu.trading_server.vo.SearchGood;
 import cn.edu.ncu.trading_server.vo.UploadFile;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.*;
 
 @Controller
@@ -118,23 +117,47 @@ public class FunctionController {
         }
     }
 
+    @RequestMapping(value = "updateUser",method = RequestMethod.POST)
+    public String updateUser(HttpSession session,
+            @RequestParam("nickname")String nickname,
+            @RequestParam("password")String password,
+            @RequestParam(value = "sex")byte sex,
+                             @RequestParam(value = "url",required = false,defaultValue = "")String url){
+        User oldUser = (User)session.getAttribute("user");
+        userService.updateUser(oldUser,nickname,password,sex,url);
+        session.removeAttribute("user");
+        session.setAttribute("user",oldUser);
+        return "redirect:/self.html";
+    }
+
     @RequestMapping(value = "/upload")
     @ResponseBody
     public JSONObject upload(@RequestParam(value = "file")MultipartFile file){
         Map<String,Object> res = new HashMap<>();
         try {
             if(file != null){
+
+                String name = System.currentTimeMillis()+file.getOriginalFilename() ;
+                String filepath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\image\\";
+                File newFile = new File(filepath+name);
+                if(!newFile.exists()){
+                    newFile.mkdirs();
+                }
+                file.transferTo(newFile);
                 List<UploadFile> list = new ArrayList<>();
                 UploadFile uploadFile = new UploadFile();
-                uploadFile.setSrc(file.getOriginalFilename());
+                uploadFile.setSrc(name);
                 list.add(uploadFile);
                 res.put("data",list);
-                res.put("code",1);
-                res.put("msg","");
+                res.put("code",0);
+                res.put("msg","上传成功");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            res.put("code",-1);
+            res.put("msg","上传失败");
         }
         return  new JSONObject(res);
     }
+
+
 }

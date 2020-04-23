@@ -33,4 +33,14 @@ public class UserService {
         }
     }
 
+    public int updateUser(User oldUser,String nickname,String password,byte sex,String url){
+        oldUser.setUserNickname(nickname);
+        oldUser.setUserPassword(password);
+        oldUser.setUserSex(sex);
+        if(url != null && !"".equals(url)){
+            oldUser.setUserAvatar(url);
+        }
+        return userMapper.updateByPrimaryKeySelective(oldUser);
+    }
+
 }

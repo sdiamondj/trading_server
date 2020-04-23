@@ -1,6 +1,5 @@
 package cn.edu.ncu.trading_server.entity;
 
-import java.util.Date;
 
 public class User {
     private Integer userId;

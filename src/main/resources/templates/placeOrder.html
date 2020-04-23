@@ -29,9 +29,9 @@
         <a href="javascript:come();"><i class="layui-icon layui-icon-service"></i>联系客服</a>
     </li>
     <li class="layui-nav-item" lay-unselect="">
-        <a href="javascript:;"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
+        <a href="/self.html"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
         <dl class="layui-nav-child">
-            <dd><a href="javascript:;">个人资料</a></dd>
+            <dd><a href="/self.html">个人资料</a></dd>
             <dd><a href="/order.html">我的订单</a></dd>
             <dd><a href="/user/logout">退出登录</a></dd>
         </dl>
