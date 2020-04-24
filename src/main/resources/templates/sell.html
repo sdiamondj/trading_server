@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/normal.css}"/>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+</head>
+<body>
+<ul class="layui-nav">
+    <li class="layui-nav-item">
+        <a href="/index.html"><i class="layui-icon layui-icon-home"></i>南昌大学游戏交易平台首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">管理员入口</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="http://www.ncu.edu.cn/" target="_blank">友情链接-南昌大学首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="/search.html">我要购买</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="/sell.html">我要出售</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:come();"><i class="layui-icon layui-icon-service"></i>联系客服</a>
+    </li>
+    <li class="layui-nav-item" lay-unselect="">
+        <a href="/self.html"><img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img"><span th:text="${session.user.userNickname}"></span></a>
+        <dl class="layui-nav-child">
+            <dd><a href="/self.html">个人资料</a></dd>
+            <dd><a href="/order.html">我的订单</a></dd>
+            <dd><a href="/user/logout">退出登录</a></dd>
+        </dl>
+    </li>
+</ul>
+
+<div class="total">
+    <div class="logos">
+        <div class="logoDiv">
+            <img src="image/logo.png" class="logoImg">
+        </div>
+        <div class="wordDiv">
+            <p class="word">游戏交易平台</p>
+        </div>
+        <p class="smallWord">——中国网游新平台</p>
+    </div>
+
+
+
+    <div class="searchDiv">
+        <i class="layui-icon layui-icon-search" style="font-size:40px;position: relative;top: 70px;left: 20px;"></i>
+        <form action="/search.html" method="get">
+            <input type="text" name="target" placeholder="输入您要查找的游戏/商品名称或关键字" class="layui-input" maxlength="30"
+                   style="position: relative;width: 500px;height: 60px; left: 90px;top:20px;font-size: 25px;">
+            <input type="submit" class="layui-btn layui-btn-normal" value="搜索"
+                   style="position: relative;width: 150px;height: 60px;font-size:30px; left: 620px;top: -40px;"/>
+        </form>
+
+    </div>
+
+</div>
+
+<div class="layui-tab layui-tab-card" style="width: 1400px;position: relative;left: 50px;top: -450px;">
+    <ul class="layui-tab-title">
+        <li class="layui-this">未交易商品管理</li>
+        <li>添加新商品</li>
+    </ul>
+    <div class="layui-tab-content" style="height: auto;">
+        <div class="layui-tab-item layui-show">
+            <table style="text-align: center;width: 1385px;">
+                <thead>
+                <tr>
+                    <th style="width: 100px;">商品编号</th>
+                    <th style="width: 150px;">商品名称</th>
+                    <th style="width: 130px;">所属游戏</th>
+                    <th style="width: 130px;">所属区服</th>
+                    <th style="width: 120px;">出售价格</th>
+                    <th style="width: 110px;">图片</th>
+                    <th style="width: 160px;">商品简介</th>
+                    <th style="width: 110px;">商品状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="height: 100px;">
+                    <form action="http://www.360.com" method="post">
+                        <th><input type="hidden" name="goodId" value="10101010">
+                            <span>12345678</span></th>
+                        <th><input type="text" name="goodName" required="required" value="测试用标题设置最长十个字" style="width: 140px;height: 50px;"></th>
+                        <th><select name="goodGame" style="width: 120px;height: 55px;">
+                            <option value="">英雄联盟</option>
+                            <option value="">王者荣耀</option>
+                        </select></th>
+                        <th><input type="text" name="gameServer" value="黑色玫瑰" style="width: 125px; height: 50px;" required="required"></th>
+                        <th><input type="number" name="goodPrice" min="0.01" step="0.01" value="9.99" style="width: 115px;height: 50px;color: orange; font-size: 30px;" required="required" ></th>
+                        <th><img src="image/wzry.jpg" style="width: 80px;height: 55px;position: relative;top: -2px;">
+                            <button class="layui-btn layui-btn-normal" style="position: relative;font-size: 15px;top: 2px;">更改图片</button></th>
+                        <th><textarea name="goodDescription" style="width: 150px;height: 90px;resize:none" maxlength="100">这个号里面大概有1000个英雄，600000万金币，总之就是很多很多</textarea></th>
+                        <th><span>审核不通过</span></th>
+                        <th><input type="submit" value="确认修改" class="layui-btn layui-btn-normal" style="position: relative;left: -50px;top: 15px;">
+                    </form>
+                    <form action="http://www.baidu.com" method="post">
+                        <input type="hidden" name="goodId" value="s">
+                        <input type="submit" value="上架" class="layui-btn layui-btn-normal" style="position: relative;width: 95px;left: 50px;top: -23px;">
+                    </form>
+                    <form action="http://www.qq.com" method="post">
+                        <input type="hidden" name="goodId" value="s">
+                        <input type="submit" value="删除商品" class="layui-btn layui-btn-warm" style="width: 195px;position:relative;top: -10px;" onclick="return confirm('确定删除商品吗?(此操作不可逆)')">
+                    </form>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="layui-tab-item">
+            <!--在这里添加内容-->
+            <div class="addGoods">
+                <form action="" method="post">
+                    <div class="bigDiv">
+                        <div class="insideDiv">
+                            <label>商品名称:</label>
+                            <div class="inDiv">
+                                <input type="text" name="goodName" value="英雄联盟全新账号" class="layui-input" style="height: 50px;position:relative;top: 15px;" required maxlength="10">
+                            </div>
+                        </div>
+                        <div class="insideDiv">
+                            <label>所属游戏:</label>
+                            <div class="inDiv">
+                                <select name="goodGame" style="width: 400px;height: 50px;">
+                                    <option value="">英雄联盟</option>
+                                    <option value="">英雄联盟</option>
+                                    <option value="">英雄联盟</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="insideDiv">
+                            <label>游戏区服:</label>
+                            <div class="inDiv">
+                                <input type="text" name="gameServer" value="黑色玫瑰" class="layui-input" style="height: 50px;position:relative;top: 15px;" required maxlength="10">
+                            </div>
+                        </div>
+                        <div class="insideDiv">
+                            <label>出售价格:</label>
+                            <div class="inDiv">
+                                <input type="number" name="goodPrice" class="layui-input" style="height: 50px;position:relative;top: 15px;color: orange;font-size: 30px;" required step="0.01" min="0.01" maxlength="10" max="9999999">
+                            </div>
+                        </div>
+                        <div class="insideDiv">
+                            <label>商品图片:</label>
+                            <div class="inDiv">
+                                <button class="layui-btn layui-btn-normal">上传图片</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="descriptionDiv">
+                        <label>商品简介:</label>
+                        <textarea name="description" style="resize:none;width: 350px;height: 200px;"></textarea>
+                    </div>
+                    <div class="imgDiv">
+                        <img src="image/wzry.jpg" style="width: 200px;height: 200px;">
+                    </div>
+                    <input type="submit" class="layui-btn layui-btn-normal" value="添加商品" style="position: relative;left: 900px;top: -600px;width: 250px;height: 80px;font-size: 30px;">
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    function come() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
+        });
+    }
+</script>
+
+</body>
+</html>

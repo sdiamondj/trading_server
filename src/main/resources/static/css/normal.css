@@ -361,3 +361,48 @@ table tbody th{
     font-size:25px;
     color: grey;
 }
+.addGoods{
+	width: 1380px;
+	height: 600px;
+	border: 2px solid;
+}
+.bigDiv{
+	width: 700px;
+	height: 500px;
+	position: relative;
+	left: 100px;
+	top: 30px;
+}
+.insideDiv{
+	width: 600px;
+	height: 80px;
+	position: relative;
+	left: 50px;
+	top: 10px;
+	line-height: 80px;
+	font-size: 25px;
+}
+.inDiv{
+	width: 400px;
+	height: 80px;
+	position: relative;
+	top: -80px;
+	left: 120px;
+}
+.descriptionDiv{
+	font-size: 25px;
+	width: 400px;
+	height: 280px;
+	position: relative;
+	left: 850px;
+	top: -470px;
+}
+.imgDiv{
+	font-size: 25px;
+	width: 200px;
+	height: 200px;
+	border: 1px solid;
+	position: relative;
+	left: 450px;
+	top: -400px;
+}

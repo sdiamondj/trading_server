@@ -143,6 +143,16 @@ public class PageController {
         }
     }
 
+    @RequestMapping(value = "/sell.html")
+    public String sell(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }else{
+            return "sell";
+        }
+    }
+
 
 
 }
