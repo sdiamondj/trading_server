@@ -18,7 +18,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         //Windows下
         registry.addResourceHandler("/image/**").addResourceLocations("file:D:\\AndroidAPP\\trading_server\\src\\main\\resources\\static\\image\\");
         //Mac或Linux下(没有CDEF盘符)
-        //registry.addResourceHandler("/uploads/**").addResourceLocations("file:/Users/liuyanzhao/Documents/uploads/");
+        //registry.addResourceHandler("/image/**").addResourceLocations("file:\\var\\www\\html\\sdj\\");
         super.addResourceHandlers(registry);
     }
 }

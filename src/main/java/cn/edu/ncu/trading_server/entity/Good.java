@@ -1,5 +1,7 @@
 package cn.edu.ncu.trading_server.entity;
 
+import lombok.AllArgsConstructor;
+
 import java.math.BigDecimal;
 import java.util.Date;
 

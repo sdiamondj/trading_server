@@ -54,7 +54,7 @@
             </thead>
             <tbody>
             <tr style="font-size:25px;height: 200px;">
-                <th><img th:src="'image/good/'+${good.goodsPicture}" style="width: 180px;height: 180px;"></th>
+                <th><img th:src="'image/'+${good.goodsPicture}" style="width: 180px;height: 180px;"></th>
                 <th><span th:text="${good.goodsName}"></span></th>
                 <th><span th:text="${game}"></span>/<span th:text="${good.goodsGameServer}"></span></th>
                 <th style="font-size:35px;color: orange;"><span th:text="${good.goodsPrice}"></span></th>
@@ -65,8 +65,10 @@
         <div style="width: 380px;height: 100px;position: relative;top: -220px;left:550px;">
             <input type="text" name="account" required lay-verify="required" placeholder="请输入收货账号游戏内ID" autocomplete="off" class="layui-input" maxlength="20" style="height: 70px;font-size: 28px;">
             <input type="hidden" name="goodId" th:value="${good.goodsId}">
+            <input type="hidden" id="sellerId" th:value="${good.goodsSeller}">
+            <input type="hidden" id="buyerId" th:value="${session.user.userId}">
         </div>
-        <input type="submit"  data-method="notice" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -200px;">
+        <input type="submit" onclick="return checkCanBuy()"  data-method="notice" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -200px;">
     </form>
 </div>
 
@@ -78,6 +80,16 @@
             var layer = layui.layer;
             layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
         });
+    }
+    function checkCanBuy() {
+        var seller = document.getElementById("sellerId").value;
+        var buyer = document.getElementById("buyerId").value;
+        if(seller == buyer){
+            alert("不能购买自己发布的商品!");
+            return false;
+        }else{
+            return true;
+        }
     }
 </script>
 

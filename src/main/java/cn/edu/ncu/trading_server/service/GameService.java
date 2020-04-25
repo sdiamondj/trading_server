@@ -16,8 +16,17 @@ public class GameService {
         return gameMapper.selectByPrimaryKey(id);
     }
 
+    public List<Game> getAll(){
+        return gameMapper.selectAll();
+    }
+
     public List<Game> getHotGames(){
-        return gameMapper.selectAll().subList(0,12);
+        List<Game> list = gameMapper.selectAll();
+        if(list == null || list.size() <= 12){
+            return list;
+        }else{
+            return list.subList(0,12);
+        }
     }
 
     public List<Game> getTypeOfGames(short gameType){

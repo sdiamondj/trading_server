@@ -7,6 +7,7 @@ import cn.edu.ncu.trading_server.mapper.GameMapper;
 import cn.edu.ncu.trading_server.mapper.GoodMapper;
 import cn.edu.ncu.trading_server.mapper.UserMapper;
 import cn.edu.ncu.trading_server.vo.SearchGood;
+import cn.edu.ncu.trading_server.vo.SellVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,38 @@ public class GoodService {
         return goodMapper.updateByPrimaryKeySelective(good);
     }
 
+    public List<SellVO> getSellVOS(int userId){
+        List<SellVO> list = new ArrayList<>();
+        List<Good> goods = goodMapper.selectBySeller(userId);
+        for(Good good : goods){
+            if(good.getGoodsState()!=3 && good.getGoodsState() != 4){
+                SellVO sellVO = new SellVO();
+                sellVO.setGoodId(good.getGoodsId());
+                sellVO.setGoodName(good.getGoodsName());
+                Game game = gameMapper.selectByPrimaryKey(good.getGoodsGame());
+                sellVO.setGoodGame(game.getGameName());
+                sellVO.setGameServer(good.getGoodsGameServer());
+                sellVO.setGoodPrice(good.getGoodsPrice());
+                sellVO.setGoodPicture(good.getGoodsPicture());
+                sellVO.setGoodDescription(good.getGoodsDescription());
+                sellVO.setGoodState(good.getGoodsState());
+                list.add(sellVO);
+            }
+        }
+        return list;
+    }
+
+    public Integer updateGood(Good good){
+        return goodMapper.updateByPrimaryKeySelective(good);
+    }
+
+    public Integer deleteGood(int goodId){
+        return goodMapper.deleteByPrimaryKey(goodId);
+    }
+
+    public Integer addGood(Good good){
+        return goodMapper.insertSelective(good);
+    }
 
 
 }

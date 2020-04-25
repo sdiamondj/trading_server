@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Controller
@@ -45,6 +46,7 @@ public class FunctionController {
         if(user == null){
             return "redirect:/login.html?error=true";
         }else{
+            //session.invalidate();
             session.setAttribute("user",user);
             return "redirect:/index.html";
         }
@@ -136,7 +138,6 @@ public class FunctionController {
         Map<String,Object> res = new HashMap<>();
         try {
             if(file != null){
-
                 String name = System.currentTimeMillis()+file.getOriginalFilename() ;
                 String filepath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\image\\";
                 File newFile = new File(filepath+name);
@@ -157,6 +158,86 @@ public class FunctionController {
             res.put("msg","上传失败");
         }
         return  new JSONObject(res);
+    }
+
+    @RequestMapping(value = "/goods/update",method = RequestMethod.POST)
+    public String updateGoods(@RequestParam("goodId")Integer goodId,
+                              @RequestParam("goodName")String goodName,
+                              @RequestParam("goodGame")Integer goodGame,
+                              @RequestParam("gameServer")String gameServer,
+                              @RequestParam("goodPrice")BigDecimal goodPrice,
+                              @RequestParam("goodPicture")String goodPicture,
+                              @RequestParam(value = "goodDescription",required = false,
+                                      defaultValue = "")String goodDescription,
+                              HttpSession session){
+        User user = (User)session.getAttribute("user");
+        Good good = new Good();
+        good.setGoodsId(goodId);
+        good.setGoodsName(goodName);
+        good.setGoodsGame(goodGame);
+        good.setGoodsGameServer(gameServer);
+        good.setGoodsPrice(goodPrice);
+        good.setGoodsPicture(goodPicture);
+        good.setGoodsDescription(goodDescription);
+        good.setGoodsState((short)0);
+        good.setGoodsSeller(user.getUserId());
+        int i = goodService.updateGood(good);
+        if( i == 1 ){
+            return "redirect:/sell.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/goods/state",method = RequestMethod.POST)
+    public String goodState(@RequestParam("goodId")int goodId,
+                            @RequestParam("goodState")short goodState){
+        if(goodState == 1){
+            goodState = 2;
+        }else{
+            goodState = 1;
+        }
+        int i = goodService.changeState(goodId,goodState);
+        if( i == 1 ){
+            return "redirect:/sell.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/goods/delete",method = RequestMethod.POST)
+    public String deleteGoods(@RequestParam("goodId")int goodId){
+        int i = goodService.deleteGood(goodId);
+        if( i == 1){
+            return "redirect:/sell.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/goods/add",method = RequestMethod.POST)
+    public String addGoods(@RequestParam("goodName")String goodName,
+                           @RequestParam("goodGame")int goodGame,
+                           @RequestParam("gameServer")String gameServer,
+                           @RequestParam("goodPrice")BigDecimal goodPrice,
+                           @RequestParam("goodPicture")String goodPicture,
+                           @RequestParam("goodDescription")String goodDescription,
+                           HttpSession session){
+        Good good = new Good();
+        good.setGoodsName(goodName);
+        good.setGoodsGame(goodGame);
+        good.setGoodsGameServer(gameServer);
+        good.setGoodsPrice(goodPrice);
+        good.setGoodsPicture(goodPicture);
+        good.setGoodsDescription(goodDescription);
+        User user = (User)session.getAttribute("user");
+        good.setGoodsSeller(user.getUserId());
+        int i = goodService.addGood(good);
+        if( i == 1){
+            return "redirect:/sell.html";
+        }else{
+            return "redirect:/404.html";
+        }
     }
 
 

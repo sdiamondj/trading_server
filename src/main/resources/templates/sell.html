@@ -73,42 +73,49 @@
             <table style="text-align: center;width: 1385px;">
                 <thead>
                 <tr>
-                    <th style="width: 100px;">商品编号</th>
-                    <th style="width: 150px;">商品名称</th>
-                    <th style="width: 130px;">所属游戏</th>
-                    <th style="width: 130px;">所属区服</th>
-                    <th style="width: 120px;">出售价格</th>
-                    <th style="width: 110px;">图片</th>
-                    <th style="width: 160px;">商品简介</th>
-                    <th style="width: 110px;">商品状态</th>
-                    <th>操作</th>
+                    <th style="width: 100px;font-size: 23px;">商品编号</th>
+                    <th style="width: 150px;font-size: 24px;">商品名称</th>
+                    <th style="width: 130px;font-size: 24px;">所属游戏</th>
+                    <th style="width: 130px;font-size: 24px;">所属区服</th>
+                    <th style="width: 120px;font-size: 24px;">出售价格</th>
+                    <th style="width: 110px;font-size: 24px;">图片</th>
+                    <th style="width: 160px;font-size: 24px;">商品简介</th>
+                    <th style="width: 110px;font-size: 24px;">商品状态</th>
+                    <th style="font-size: 24px;">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr style="height: 100px;">
-                    <form action="http://www.360.com" method="post">
-                        <th><input type="hidden" name="goodId" value="10101010">
-                            <span>12345678</span></th>
-                        <th><input type="text" name="goodName" required="required" value="测试用标题设置最长十个字" style="width: 140px;height: 50px;"></th>
+                <tr style="height: 100px;font-size: 22px;" th:each="sellVO:${sellVOS}">
+                    <form action="/goods/update" method="post">
+                        <th><input type="hidden" name="goodId" th:value="${sellVO.goodId}">
+                            <span style="font-size: 25px;" th:text="${sellVO.goodId}"></span></th>
+                        <th><input type="text" name="goodName" required="required" th:value="${sellVO.goodName}" style="width: 140px;height: 50px;"></th>
                         <th><select name="goodGame" style="width: 120px;height: 55px;">
-                            <option value="">英雄联盟</option>
-                            <option value="">王者荣耀</option>
+                            <option th:each="game:${games}" th:value="${game.gameId}" th:text="${game.gameName}"></option>
                         </select></th>
-                        <th><input type="text" name="gameServer" value="黑色玫瑰" style="width: 125px; height: 50px;" required="required"></th>
-                        <th><input type="number" name="goodPrice" min="0.01" step="0.01" value="9.99" style="width: 115px;height: 50px;color: orange; font-size: 30px;" required="required" ></th>
-                        <th><img src="image/wzry.jpg" style="width: 80px;height: 55px;position: relative;top: -2px;">
-                            <button class="layui-btn layui-btn-normal" style="position: relative;font-size: 15px;top: 2px;">更改图片</button></th>
-                        <th><textarea name="goodDescription" style="width: 150px;height: 90px;resize:none" maxlength="100">这个号里面大概有1000个英雄，600000万金币，总之就是很多很多</textarea></th>
-                        <th><span>审核不通过</span></th>
+                        <th><input type="text" name="gameServer" th:value="${sellVO.gameServer}" style="width: 125px; height: 50px;" required="required"></th>
+                        <th><input type="number" name="goodPrice" min="0.01" step="0.01" th:value="${sellVO.goodPrice}" style="width: 115px;height: 50px;color: orange; font-size: 35px;" required="required" ></th>
+                        <th><img id="goodPicture" th:src="'image/'+${sellVO.goodPicture}" style="width: 80px;height: 55px;position: relative;top: -2px;">
+                            <button type="button" class="layui-btn layui-btn-normal" style="position: relative;font-size: 15px;top: 2px;" id="changePicture">更改图片</button>
+                            <input type="hidden" name="goodPicture" id="url" th:value="${sellVO.goodPicture}">
+                        </th>
+                        <th><textarea name="goodDescription" style="width: 150px;height: 90px;resize:none;font-size: 15px;" maxlength="100" th:text="${sellVO.goodDescription}"></textarea></th>
+                        <th th:if="${sellVO.goodState} eq '0'"><span>待审核</span></th>
+                        <th th:if="${sellVO.goodState} eq '1'"><span>已上架</span></th>
+                        <th th:if="${sellVO.goodState} eq '2'"><span>已下架</span></th>
+                        <th th:if="${sellVO.goodState} eq '5'"><span>审核不通过</span></th>
                         <th><input type="submit" value="确认修改" class="layui-btn layui-btn-normal" style="position: relative;left: -50px;top: 15px;">
                     </form>
-                    <form action="http://www.baidu.com" method="post">
-                        <input type="hidden" name="goodId" value="s">
-                        <input type="submit" value="上架" class="layui-btn layui-btn-normal" style="position: relative;width: 95px;left: 50px;top: -23px;">
+                    <form action="/goods/state" method="post">
+                        <input type="hidden" name="goodId" th:value="${sellVO.goodId}">
+                        <input type="hidden" name="goodState" th:value="${sellVO.goodState}">
+                        <input th:if="${sellVO.goodState} eq '1'" type="submit" value="下架" class="layui-btn layui-btn-warm" style="position: relative;width: 95px;left: 50px;top: -23px;">
+                        <input th:if="${sellVO.goodState} eq '2'" type="submit" value="上架" class="layui-btn layui-btn-normal" style="position: relative;width: 95px;left: 50px;top: -23px;">
+                        <input th:if="${sellVO.goodState} eq '0' or ${sellVO.goodState} eq '5'" type="submit" value="" class="layui-btn layui-btn-disabled" style="position: relative;width: 95px;left: 50px;top: -23px;">
                     </form>
-                    <form action="http://www.qq.com" method="post">
-                        <input type="hidden" name="goodId" value="s">
-                        <input type="submit" value="删除商品" class="layui-btn layui-btn-warm" style="width: 195px;position:relative;top: -10px;" onclick="return confirm('确定删除商品吗?(此操作不可逆)')">
+                    <form action="/goods/delete" method="post">
+                        <input type="hidden" name="goodId" th:value="${sellVO.goodId}">
+                        <input type="submit" value="删除商品" class="layui-btn layui-btn-danger" style="width: 195px;position:relative;top: -10px;" onclick="return confirm('确定删除商品吗?(此操作不可逆)')">
                     </form>
                 </tr>
 
@@ -120,28 +127,26 @@
         <div class="layui-tab-item">
             <!--在这里添加内容-->
             <div class="addGoods">
-                <form action="" method="post">
+                <form action="/goods/add" method="post">
                     <div class="bigDiv">
                         <div class="insideDiv">
                             <label>商品名称:</label>
                             <div class="inDiv">
-                                <input type="text" name="goodName" value="英雄联盟全新账号" class="layui-input" style="height: 50px;position:relative;top: 15px;" required maxlength="10">
+                                <input type="text" name="goodName"  class="layui-input" style="height: 50px;position:relative;top: 15px;" required maxlength="10">
                             </div>
                         </div>
                         <div class="insideDiv">
                             <label>所属游戏:</label>
                             <div class="inDiv">
                                 <select name="goodGame" style="width: 400px;height: 50px;">
-                                    <option value="">英雄联盟</option>
-                                    <option value="">英雄联盟</option>
-                                    <option value="">英雄联盟</option>
+                                    <option th:each="game:${games}" th:value="${game.gameId}" th:text="${game.gameName}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="insideDiv">
                             <label>游戏区服:</label>
                             <div class="inDiv">
-                                <input type="text" name="gameServer" value="黑色玫瑰" class="layui-input" style="height: 50px;position:relative;top: 15px;" required maxlength="10">
+                                <input type="text" name="gameServer"  class="layui-input" style="height: 50px;position:relative;top: 15px;" required maxlength="10">
                             </div>
                         </div>
                         <div class="insideDiv">
@@ -153,18 +158,19 @@
                         <div class="insideDiv">
                             <label>商品图片:</label>
                             <div class="inDiv">
-                                <button class="layui-btn layui-btn-normal">上传图片</button>
+                                <input type="hidden" name="goodPicture" id="pictureUrl" value="">
+                                <button type="button" class="layui-btn layui-btn-normal" id="uploadPicture">上传图片</button>
                             </div>
                         </div>
                     </div>
                     <div class="descriptionDiv">
                         <label>商品简介:</label>
-                        <textarea name="description" style="resize:none;width: 350px;height: 200px;"></textarea>
+                        <textarea name="goodDescription" style="resize:none;width: 350px;height: 200px;"></textarea>
                     </div>
                     <div class="imgDiv">
-                        <img src="image/wzry.jpg" style="width: 200px;height: 200px;">
+                        <img id="picture" style="width: 200px;height: 200px;">
                     </div>
-                    <input type="submit" class="layui-btn layui-btn-normal" value="添加商品" style="position: relative;left: 900px;top: -600px;width: 250px;height: 80px;font-size: 30px;">
+                    <input type="submit" onclick="return checkPicture()" class="layui-btn layui-btn-normal" value="添加商品" style="position: relative;left: 900px;top: -600px;width: 250px;height: 80px;font-size: 30px;">
                 </form>
             </div>
         </div>
@@ -183,6 +189,56 @@
             layer.msg('本站暂无人工客服在线!如有疑问请咨询邮箱shendongjian@email.ncu.edu.cn');
         });
     }
+    function checkPicture() {
+        var picture = document.getElementById("pictureUrl").value;
+        if(picture == "" || picture == undefined || picture == null){
+            alert("请上传图片!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery;
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#changePicture' //绑定元素
+            ,url: '/upload' //上传接口
+            ,before:function(obj){
+                obj.preview(function(index, file, result){
+                    $('#goodPicture').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                document.getElementById("url").value=res.data[0].src;
+            }
+            ,error: function(){
+                alert("上传图片失败,服务器异常!");
+            }
+        });
+
+        //执行实例
+        var uploadTwo = upload.render({
+            elem: '#uploadPicture' //绑定元素
+            ,url: '/upload' //上传接口
+            ,before:function(obj){
+                obj.preview(function(index, file, result){
+                    $('#picture').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                document.getElementById("pictureUrl").value=res.data[0].src;
+            }
+            ,error: function(){
+                alert("上传图片失败,服务器异常!");
+            }
+        });
+
+    });
 </script>
 
 </body>

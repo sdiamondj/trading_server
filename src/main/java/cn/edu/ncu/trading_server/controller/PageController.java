@@ -8,6 +8,7 @@ import cn.edu.ncu.trading_server.service.GoodService;
 import cn.edu.ncu.trading_server.service.OrderService;
 import cn.edu.ncu.trading_server.service.UserService;
 import cn.edu.ncu.trading_server.vo.OrderVO;
+import cn.edu.ncu.trading_server.vo.SellVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -144,11 +145,16 @@ public class PageController {
     }
 
     @RequestMapping(value = "/sell.html")
-    public String sell(HttpSession session){
+    public String sell(HttpSession session,Model model){
         User user = (User)session.getAttribute("user");
         if(user == null){
             return "redirect:/login.html";
         }else{
+            Integer userId = user.getUserId();
+            List<SellVO> sellVOS = goodService.getSellVOS(userId);
+            model.addAttribute("sellVOS",sellVOS);
+            List<Game> games = gameService.getAll();
+            model.addAttribute("games",games);
             return "sell";
         }
     }
