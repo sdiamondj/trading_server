@@ -68,7 +68,7 @@
             <input type="hidden" id="sellerId" th:value="${good.goodsSeller}">
             <input type="hidden" id="buyerId" th:value="${session.user.userId}">
         </div>
-        <input type="submit" onclick="return checkCanBuy()"  data-method="notice" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -200px;">
+        <input type="submit" id="submitBtn"  onclick="return checkCanBuy()"  data-method="notice" class="layui-btn layui-btn-normal" value="提交订单" style="width: 220px;height: 70px;font-size: 30px;position: relative;left: 620px;top: -200px;">
     </form>
 </div>
 

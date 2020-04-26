@@ -65,10 +65,14 @@ public class FunctionController {
     }
 
     @RequestMapping(value = "/order/submit")
-    public String submitOrder(HttpSession session,
+    public synchronized String submitOrder(HttpSession session,
                               @RequestParam("account")String account,
                               @RequestParam("goodId")int goodId){
         User user = (User)session.getAttribute("user");
+        int count = orderService.checkOrder(goodId,user.getUserId());
+        if(count > 0){
+            return "redirect:/order.html";
+        }
         int res = orderService.submitOrder(user.getUserId(),goodId,account);
         if(res == 1){
             Good good = goodService.getGoodById(goodId);
@@ -119,7 +123,7 @@ public class FunctionController {
         }
     }
 
-    @RequestMapping(value = "updateUser",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     public String updateUser(HttpSession session,
             @RequestParam("nickname")String nickname,
             @RequestParam("password")String password,

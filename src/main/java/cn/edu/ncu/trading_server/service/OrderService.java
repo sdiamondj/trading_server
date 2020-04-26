@@ -30,6 +30,10 @@ public class OrderService {
         return orderMapper.insertSelective(order);
     }
 
+    public int checkOrder(int goodId,int userId){
+        return orderMapper.selectCountIsSubmit(goodId,userId);
+    }
+
     public List<OrderVO> getAllBuyOrdersVO(int buyer){
         List<Order> orders =orderMapper.getOrderByBuyer(buyer);
         return this.change(orders);
@@ -80,6 +84,14 @@ public class OrderService {
         }
         order.setOrderState(i);
         order.setOrderId(orderId);
+        if(i == 5){
+            Order oldOrder = orderMapper.selectByPrimaryKey(orderId);
+            int goodId = oldOrder.getOrderGoods();
+            Good good = new Good();
+            good.setGoodsId(goodId);
+            good.setGoodsState((short)1);
+            goodMapper.updateByPrimaryKeySelective(good);
+        }
         return orderMapper.updateByPrimaryKeySelective(order);
     }
 }

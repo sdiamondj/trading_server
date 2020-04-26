@@ -127,4 +127,10 @@
     from t_order
     where order_goods = #{goodId,jdbcType=INTEGER}
   </select>
+  <select id="selectCountIsSubmit" resultType="java.lang.Integer">
+    select count(*)
+    from t_order
+    where order_goods = #{goodId} and order_buyer = #{buyerId}
+    and order_state != 5
+  </select>
 </mapper>
