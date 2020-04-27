@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台管理系统</title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/admin.html">控制台</a></li>
+            <li class="layui-nav-item"><a href="/index.html">游戏交易平台首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img">
+                    <span th:text="${session.user.userNickname}"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/user/logout">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">数据报表</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">平台管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">用户管理</a></dd>
+                        <dd><a href="javascript:;">游戏管理</a></dd>
+                        <dd><a href="javascript:;">商品管理</a></dd>
+                        <dd><a href="javascript:;">订单管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/approval.html">商品审核</a></li>
+                <li class="layui-nav-item layui-this"><a href="/addGame.html">新游戏录入</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div style="width: 1200px;height: 600px;border: 2px solid;padding: 10px;">
+                <form action="/admin/addGame" method="post">
+                    <div class="myDiv"><label class="myLabel">游戏名称:</label>
+                        <input type="text" required name="gameName" class="inputText" maxlength="20"></div>
+                    <div class="myDiv">
+                        <label class="myLabel">游戏类型:</label>
+                        <select name="gameType" class="inputText">
+                            <option value="1">PC客户端游戏</option>
+                            <option value="2">网页游戏</option>
+                            <option value="3">手机游戏</option>
+                            <option value="4">其他游戏</option>
+                        </select>
+                    </div>
+                    <div class="myDiv">
+                        <label class="myLabel">游戏LOGO:</label>
+                        <button type="button" id="upload" class="layui-btn layui-btn-normal" style="">上传图片</button>
+                    </div>
+                    <div class="imgDiv">
+                        <input type="hidden" name="gameLogo" id="gameLogo">
+                        <img id="logoPicture" style="width: 200px;height: 200px;">
+                    </div>
+                    <div class="myDiv">
+                        <input onclick="return checkPicture()" type="submit" class="layui-btn layui-btn-normal" value="录入游戏" style="position:relative;left: 100px;width: 200px;font-size: 20px;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © DiamondJ 联系邮箱shendongjian@email.ncu.edu.cn
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+</script>
+<script>
+    function checkPicture() {
+        var picture = document.getElementById("gameLogo").value;
+        if(picture == "" || picture == undefined || picture == null){
+            alert("请上传图片!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery;
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#upload' //绑定元素
+            ,url: '/upload' //上传接口
+            ,before:function(obj){
+                obj.preview(function(index, file, result){
+                    $('#logoPicture').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                document.getElementById("gameLogo").value=res.data[0].src;
+            }
+            ,error: function(){
+                alert("上传图片失败,服务器异常!");
+            }
+        });
+
+    });
+</script>
+
+
+</body>
+</html>

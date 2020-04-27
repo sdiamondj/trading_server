@@ -31,4 +31,6 @@ public interface GoodMapper {
 
     List<Good> selectBySeller(int seller);
 
+    List<Good> selectByState(int state);
+
 }

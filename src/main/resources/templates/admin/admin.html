@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台管理系统</title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+</head>
+<body>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/admin.html">控制台</a></li>
+            <li class="layui-nav-item"><a href="/index.html">游戏交易平台首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img">
+                    <span th:text="${session.user.userNickname}"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/user/logout">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">数据报表</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">平台管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">用户管理</a></dd>
+                        <dd><a href="javascript:;">游戏管理</a></dd>
+                        <dd><a href="javascript:;">商品管理</a></dd>
+                        <dd><a href="javascript:;">订单管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/approval.html">商品审核</a></li>
+                <li class="layui-nav-item"><a href="/addGame.html">新游戏录入</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;"><h1 style="font-size: 30px;">welcome to admin system！</h1>
+            <hr>
+            <span id="datetime" style="font-size: 25px;"></span>
+            <hr>
+            <h1>请点击左侧导航栏继续您的操作!</h1>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © DiamondJ 联系邮箱shendongjian@email.ncu.edu.cn
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+</script>
+<script>
+    setInterval("datetime.innerHTML='现在是北京时间:'+new Date().toLocaleString()",10);
+</script>
+
+
+</body>
+</html>

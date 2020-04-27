@@ -7,6 +7,7 @@ import cn.edu.ncu.trading_server.service.GameService;
 import cn.edu.ncu.trading_server.service.GoodService;
 import cn.edu.ncu.trading_server.service.OrderService;
 import cn.edu.ncu.trading_server.service.UserService;
+import cn.edu.ncu.trading_server.vo.ApprovalVO;
 import cn.edu.ncu.trading_server.vo.OrderVO;
 import cn.edu.ncu.trading_server.vo.SellVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,6 +157,47 @@ public class PageController {
             List<Game> games = gameService.getAll();
             model.addAttribute("games",games);
             return "sell";
+        }
+    }
+
+    @RequestMapping(value = "/admin.html")
+    public String goAdmin(HttpSession session,Model model){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            return "admin/admin";
+        }
+    }
+
+    @RequestMapping(value = "/addGame.html")
+    public String addGame(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            return "admin/addGame";
+        }
+    }
+
+    @RequestMapping(value = "/approval.html")
+    public String approvalGood(HttpSession session,Model model){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            List<ApprovalVO> approvalVOS = goodService.getApprovalVOList();
+            model.addAttribute("approvalVOS",approvalVOS);
+            return "admin/approval";
         }
     }
 

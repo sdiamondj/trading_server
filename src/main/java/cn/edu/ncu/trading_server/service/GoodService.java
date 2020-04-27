@@ -6,8 +6,10 @@ import cn.edu.ncu.trading_server.entity.User;
 import cn.edu.ncu.trading_server.mapper.GameMapper;
 import cn.edu.ncu.trading_server.mapper.GoodMapper;
 import cn.edu.ncu.trading_server.mapper.UserMapper;
+import cn.edu.ncu.trading_server.vo.ApprovalVO;
 import cn.edu.ncu.trading_server.vo.SearchGood;
 import cn.edu.ncu.trading_server.vo.SellVO;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,6 +105,25 @@ public class GoodService {
 
     public Integer addGood(Good good){
         return goodMapper.insertSelective(good);
+    }
+
+    public List<ApprovalVO> getApprovalVOList(){
+        List<ApprovalVO> list = new ArrayList<>();
+        List<Good> goods = goodMapper.selectByState(0);
+        for(Good good : goods){
+            ApprovalVO approvalVO = new ApprovalVO();
+            approvalVO.setGoodId(good.getGoodsId());
+            approvalVO.setGoodName(good.getGoodsName());
+            Game game = gameMapper.selectByPrimaryKey(good.getGoodsGame());
+            approvalVO.setGoodGame(game.getGameName());
+            approvalVO.setGameServer(good.getGoodsGameServer());
+            approvalVO.setGoodPicture(good.getGoodsPicture());
+            approvalVO.setGoodPrice(good.getGoodsPrice());
+            User seller = userMapper.selectByPrimaryKey(good.getGoodsSeller());
+            approvalVO.setGoodSeller(seller.getUserPhone());
+            list.add(approvalVO);
+        }
+        return list;
     }
 
 

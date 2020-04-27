@@ -16,6 +16,8 @@ public class User {
 
     private String userRegisterTime;
 
+    private Integer userIsAdmin;
+
     public Integer getUserId() {
         return userId;
     }
@@ -70,5 +72,13 @@ public class User {
 
     public void setUserRegisterTime(String userRegisterTime) {
         this.userRegisterTime = userRegisterTime == null ? null : userRegisterTime.trim();
+    }
+
+    public Integer getUserIsAdmin() {
+        return userIsAdmin;
+    }
+
+    public void setUserIsAdmin(Integer userIsAdmin) {
+        this.userIsAdmin = userIsAdmin;
     }
 }

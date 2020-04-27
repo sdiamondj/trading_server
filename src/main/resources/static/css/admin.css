@@ -1,0 +1,52 @@
+.myDiv{
+	width: 600px;
+	height: 100px;
+	position:relative;
+	top: 30px;
+}
+.myLabel{
+	font-size: 25px;
+}
+.inputText{
+	width: 300px;
+	height: 40px;
+	font-size: 25px;
+}
+.imgDiv{
+	width: 200px;
+	height: 200px;
+	border: 1px solid;
+	position: relative;
+	left: 100px;
+}
+table{
+	font-size:20px;
+	color: grey;
+}
+table thead tr{
+	height: 80px;
+}
+table thead th{
+	width: 200px;
+	color: #4f6b72;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	border-left: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA  no-repeat;
+}
+table tbody tr{
+	height: 150px;
+}
+table tbody th{
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-left: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #4f6b72;
+
+}

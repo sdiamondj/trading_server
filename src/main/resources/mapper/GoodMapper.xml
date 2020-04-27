@@ -182,4 +182,10 @@
         from t_goods
         where goods_seller = #{seller,jdbcType=INTEGER}
     </select>
+    <select id="selectByState" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods
+        where goods_state = #{state,jdbcType=INTEGER}
+    </select>
 </mapper>

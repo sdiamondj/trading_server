@@ -1,6 +1,7 @@
 package cn.edu.ncu.trading_server.controller;
 
 import cn.edu.ncu.trading_server.dto.UserLoginDTO;
+import cn.edu.ncu.trading_server.entity.Game;
 import cn.edu.ncu.trading_server.entity.Good;
 import cn.edu.ncu.trading_server.entity.User;
 import cn.edu.ncu.trading_server.service.GameService;
@@ -36,6 +37,8 @@ public class FunctionController {
     private UserService userService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private GameService gameService;
 
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public String userLogin(@RequestParam("userPhone")Long userPhone,
@@ -239,6 +242,33 @@ public class FunctionController {
         int i = goodService.addGood(good);
         if( i == 1){
             return "redirect:/sell.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/admin/addGame",method = RequestMethod.POST)
+    public String addGame(@RequestParam("gameName")String gameName,
+                          @RequestParam("gameType")short gameType,
+                          @RequestParam("gameLogo")String gameLogo){
+        Game game = new Game();
+        game.setGameName(gameName);
+        game.setGamePicture(gameLogo);
+        game.setGameType(gameType);
+        int i = gameService.addGame(game);
+        if(i == 1){
+            return "redirect:/addGame.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/admin/approval")
+    public String approval(@RequestParam("goodId")int goodId,
+                           @RequestParam("goodState")short goodState){
+        int i = goodService.changeState(goodId, goodState);
+        if( i == 1){
+            return "redirect:/approval.html";
         }else{
             return "redirect:/404.html";
         }

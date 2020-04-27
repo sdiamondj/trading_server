@@ -14,7 +14,8 @@
         <a href="/index.html"><i class="layui-icon layui-icon-home"></i>南昌大学游戏交易平台首页</a>
     </li>
     <li class="layui-nav-item">
-        <a href="">管理员入口</a>
+        <input type="hidden" th:value="${session.user.userIsAdmin}" id="isAdmin">
+        <a href="/admin.html" onclick="return checkAdmin()">管理员入口</a>
     </li>
     <li class="layui-nav-item">
         <a href="http://www.ncu.edu.cn/" target="_blank">友情链接-南昌大学首页</a>
@@ -86,6 +87,15 @@
         var buyer = document.getElementById("buyerId").value;
         if(seller == buyer){
             alert("不能购买自己发布的商品!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function checkAdmin() {
+        var isAdmin = document.getElementById("isAdmin").value;
+        if(isAdmin == '0' || isAdmin == 0){
+            alert("对不起,您不是管理员,无权限进入!");
             return false;
         }else{
             return true;

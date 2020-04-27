@@ -37,4 +37,8 @@ public class GameService {
             return list.subList(0,12);
         }
     }
+
+    public int addGame(Game game){
+        return gameMapper.insertSelective(game);
+    }
 }
