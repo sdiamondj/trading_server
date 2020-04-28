@@ -126,5 +126,14 @@ public class GoodService {
         return list;
     }
 
+    public int getGoodCount(){
+        return goodMapper.selectAll().size();
+    }
+
+    public List<Good> getGoodList(int page,int limit){
+        List<Good> list = goodMapper.selectAll();
+        return UserService.listUtil(list,page,limit);
+    }
+
 
 }

@@ -5,6 +5,8 @@ import cn.edu.ncu.trading_server.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface UserMapper {
@@ -23,5 +25,9 @@ public interface UserMapper {
     User userLogin(UserLoginDTO dto);
 
     User selectByPhone(Long userPhone);
+
+    int selectCount();
+
+    List<User> selectAll();
 
 }

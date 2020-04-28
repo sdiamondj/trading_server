@@ -201,6 +201,57 @@ public class PageController {
         }
     }
 
+    @RequestMapping(value = "/admin-user.html")
+    public String adminUser(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            return "admin/admin-user";
+        }
+    }
+
+    @RequestMapping(value = "/admin-game.html")
+    public String adminGame(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            return "admin/admin-game";
+        }
+    }
+
+    @RequestMapping(value = "/admin-goods.html")
+    public String adminGoods(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            return "admin/admin-goods";
+        }
+    }
+
+    @RequestMapping(value = "/admin-order.html")
+    public String adminOrder(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            return "admin/admin-order";
+        }
+    }
 
 
 }

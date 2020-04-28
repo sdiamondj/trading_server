@@ -7,6 +7,15 @@
     <script type="text/javascript" th:src="@{/layui.js}"></script>
     <link rel="stylesheet" th:href="@{/css/layui.css}"/>
     <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+    <style>
+        .layui-table-header th {
+            text-align: center;
+            font-size: 22px;
+        }
+        .layui-table-body tr{
+            height: 60px;
+        }
+    </style>
 </head>
 <body>
 
@@ -35,19 +44,19 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a href="/admin-chart.html">数据报表</a>
-                </li>
                 <li class="layui-nav-item">
+                    <a href="/admin-chart.html;">数据报表</a>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">平台管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/admin-user.html">用户管理</a></dd>
                         <dd><a href="/admin-game.html">游戏管理</a></dd>
-                        <dd><a href="/admin-goods.html">商品管理</a></dd>
+                        <dd class="layui-this"><a href="/admin-goods.html">商品管理</a></dd>
                         <dd><a href="/admin-order.html">订单管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item  layui-this"><a href="/approval.html">商品审核</a></li>
+                <li class="layui-nav-item"><a href="/approval.html">商品审核</a></li>
                 <li class="layui-nav-item"><a href="/addGame.html">新游戏录入</a></li>
             </ul>
         </div>
@@ -57,34 +66,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <div style="width: 1250px;height: auto;border: 2px solid;padding: 10px;">
-                <table style="width: 1250px;font-size: 25px;">
-                    <thead>
-                    <tr>
-                        <th style="width: 100px;">商品id</th>
-                        <th style="width: 150px;">商品名称</th>
-                        <th style="width: 100px;">所属游戏</th>
-                        <th style="width: 100px;">所属服务器</th>
-                        <th style="width: 150px;">卖家手机号</th>
-                        <th style="width: 100px;">价格</th>
-                        <th style="width: 100px;">商品图片</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="approvalVO:${approvalVOS}" style="height: 150px;">
-                        <th><span th:text="${approvalVO.goodId}"></span></th>
-                        <th><span th:text="${approvalVO.goodName}"></span></th>
-                        <th><span th:text="${approvalVO.goodGame}"></span></th>
-                        <th><span th:text="${approvalVO.gameServer}"></span></th>
-                        <th><span th:text="${approvalVO.goodSeller}"></span></th>
-                        <th><span style="font-size: 35px;color: orange;" th:text="${approvalVO.goodPrice}"></span></th>
-                        <th><img style="width: 100px;height: 100px;" th:src="'image/'+${approvalVO.goodPicture}"></th>
-                        <th>
-                            <a th:href="'/admin/approval?goodId='+${approvalVO.goodId}+'&goodState=1'"><button class="layui-btn layui-btn-normal">通&emsp;过</button></a>
-                            <a th:href="'/admin/approval?goodId='+${approvalVO.goodId}+'&goodState=5'"><button class="layui-btn layui-btn-warm">不通过</button></a></th>
-                    </tr>
-                    </tbody>
-                </table>
+                <table id="demo" lay-filter="test"></table>
             </div>
         </div>
     </div>
@@ -95,6 +77,52 @@
     </div>
 </div>
 <script type="text/javascript" th:src="@{/layui.all.js}"></script>
+
+<script th:inline="javascript">
+    layui.use('table', function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 'full-100'
+            ,url: '/admin/getGoods' //数据接口
+            ,page: true //开启分页
+            //,where:{target:'[(${target})]'}
+            ,cols: [
+                [ //表头
+                    {field:'goodsId', width:100,sort:true,style:'font-size:20px;',title:'ID'}
+                    ,{field:'goodsName', width:220,style:'font-size:20px;',title:'名称'}
+                    ,{field:'goodsGame', width:125,style:'font-size:20px;',title:'游戏id'}
+                    ,{field:'goodsSeller',width:125,style:'font-size:22px;',title:'卖家id'}
+                    ,{field:'goodsPrice',width:100,style:'font-size:20px;',title:'价格'}
+                    ,{field:'goodsGameServer',width:170,style:'font-size:22px;',title:'服务器'}
+                    ,{field:'goodsState',width:150,style:'font-size:22px;',title:'状态'}
+                    ,{field:'goodsUpdateTime',sort:true,width:230,style:'font-size:20px;',title:'更新时间'}
+                ]
+            ]
+            ,done: function (res,curr,count) {
+                $("[data-field='goodsState']").children().each(function(){
+                    if($(this).text()=='0'){
+                        $(this).text("待审核")
+                    }else if($(this).text()=='1'){
+                        $(this).text("已上架")
+                    }else if($(this).text()=='2'){
+                        $(this).text("已下架")
+                    }else if($(this).text()=='3'){
+                        $(this).text("交易中")
+                    }else if($(this).text()=='4'){
+                        $(this).text("已售出")
+                    }else if($(this).text()=='5'){
+                        $(this).text("审核不通过")
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 <script>
     //JavaScript代码区域
     layui.use('element', function(){

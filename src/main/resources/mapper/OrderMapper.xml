@@ -127,6 +127,11 @@
     from t_order
     where order_goods = #{goodId,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+  </select>
   <select id="selectCountIsSubmit" resultType="java.lang.Integer">
     select count(*)
     from t_order

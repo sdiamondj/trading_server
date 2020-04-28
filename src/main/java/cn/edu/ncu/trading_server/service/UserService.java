@@ -6,6 +6,8 @@ import cn.edu.ncu.trading_server.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -14,6 +16,27 @@ public class UserService {
     public User userLogin(UserLoginDTO userLoginDTO){
         User user = userMapper.userLogin(userLoginDTO);
         return user;
+    }
+
+    public int getUserCount(){
+        return userMapper.selectCount();
+    }
+
+    public static<T> List<T> listUtil(List<T> list,int page,int limit){
+        if(list.size() <= limit){
+            return list;
+        }else{
+            if((page-1)*limit+limit <= list.size()){
+                return list.subList((page-1)*limit,(page-1)*limit+limit);
+            }else{
+                return list.subList((page-1)*limit,list.size());
+            }
+        }
+    }
+
+    public List<User> getUserList(int page,int limit){
+        List<User> list = userMapper.selectAll();
+        return listUtil(list,page,limit);
     }
 
     public User getUserById(int id){
@@ -41,6 +64,14 @@ public class UserService {
             oldUser.setUserAvatar(url);
         }
         return userMapper.updateByPrimaryKeySelective(oldUser);
+    }
+
+    public int addAdmin(User user){
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    public int deleteUser(int userId){
+        return userMapper.deleteByPrimaryKey(userId);
     }
 
 }

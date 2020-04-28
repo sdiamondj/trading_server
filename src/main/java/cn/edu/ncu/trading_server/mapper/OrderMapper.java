@@ -26,5 +26,7 @@ public interface OrderMapper {
 
     List<Order> getOrderByGoodId(int goodId);
 
+    List<Order> selectAll();
+
     int selectCountIsSubmit(@Param("goodId")int goodId,@Param("buyerId")int buyerId);
 }

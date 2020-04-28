@@ -3,6 +3,7 @@ package cn.edu.ncu.trading_server.controller;
 import cn.edu.ncu.trading_server.dto.UserLoginDTO;
 import cn.edu.ncu.trading_server.entity.Game;
 import cn.edu.ncu.trading_server.entity.Good;
+import cn.edu.ncu.trading_server.entity.Order;
 import cn.edu.ncu.trading_server.entity.User;
 import cn.edu.ncu.trading_server.service.GameService;
 import cn.edu.ncu.trading_server.service.GoodService;
@@ -13,7 +14,6 @@ import cn.edu.ncu.trading_server.vo.SearchGood;
 import cn.edu.ncu.trading_server.vo.UploadFile;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.math.BigDecimal;
@@ -272,6 +271,123 @@ public class FunctionController {
         }else{
             return "redirect:/404.html";
         }
+    }
+
+    @RequestMapping(value = "/admin/getUser")
+    @ResponseBody
+    public Map<String,Object> adminGetUser(@RequestParam(required = false,defaultValue = "1")int page,
+                                           @RequestParam(required = false,defaultValue = "10")int limit,
+                                           HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        User user = (User)session.getAttribute("user");
+        if(user == null || user.getUserIsAdmin() == 0){
+            map.put("code",-1);
+            map.put("msg","没有权限!");
+        }else{
+            int count = userService.getUserCount();
+            List<User> list = userService.getUserList(page,limit);
+            map.put("count",count);
+            map.put("data",list);
+            map.put("code",0);
+            map.put("msg","success");
+        }
+        return map;
+    }
+
+    @RequestMapping("/user/admin")
+    public String addAdmin(@RequestParam("userId")Integer userId){
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserIsAdmin(1);
+        int i = userService.addAdmin(user);
+        if(i == 1){
+            return "redirect:/admin-user.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping("/user/delete")
+    public String deleteUser(@RequestParam("userId")Integer userId){
+        int i = userService.deleteUser(userId);
+        if(i == 1){
+            return "redirect:/admin-user.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/admin/getGame")
+    @ResponseBody
+    public Map<String,Object> adminGetGame(@RequestParam(required = false,defaultValue = "1")int page,
+                                           @RequestParam(required = false,defaultValue = "10")int limit,
+                                           HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        User user = (User)session.getAttribute("user");
+        if(user == null || user.getUserIsAdmin() == 0){
+            map.put("code",-1);
+            map.put("msg","没有权限!");
+        }else{
+            int count = gameService.getGameCount();
+            List<Game> list = gameService.getGameList(page,limit);
+            map.put("count",count);
+            map.put("data",list);
+            map.put("code",0);
+            map.put("msg","success");
+        }
+        return map;
+    }
+
+    @RequestMapping("/game/delete")
+    public String deleteGame(@RequestParam("gameId")Integer gameId){
+        int i = gameService.deleteGame(gameId);
+        if(i == 1){
+            return "redirect:/admin-game.html";
+        }else{
+            return "redirect:/404.html";
+        }
+    }
+
+    @RequestMapping(value = "/admin/getGoods")
+    @ResponseBody
+    public Map<String,Object> adminGetGoods(@RequestParam(required = false,defaultValue = "1")int page,
+                                           @RequestParam(required = false,defaultValue = "10")int limit,
+                                           HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        User user = (User)session.getAttribute("user");
+        if(user == null || user.getUserIsAdmin() == 0){
+            map.put("code",-1);
+            map.put("msg","没有权限!");
+        }else{
+            int count = goodService.getGoodCount();
+            List<Good> list = goodService.getGoodList(page,limit);
+            map.put("count",count);
+            map.put("data",list);
+            map.put("code",0);
+            map.put("msg","success");
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/admin/getOrder")
+    @ResponseBody
+    public Map<String,Object> adminGetOrder(@RequestParam(required = false,defaultValue = "1")int page,
+                                            @RequestParam(required = false,defaultValue = "10")int limit,
+                                            HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        User user = (User)session.getAttribute("user");
+        if(user == null || user.getUserIsAdmin() == 0){
+            map.put("code",-1);
+            map.put("msg","没有权限!");
+        }else{
+            int count = orderService.getOrderCount();
+            List<Order> list = orderService.getOrderList(page,limit);
+            map.put("count",count);
+            map.put("data",list);
+            map.put("code",0);
+            map.put("msg","success");
+        }
+        return map;
     }
 
 

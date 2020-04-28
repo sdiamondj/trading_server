@@ -94,4 +94,13 @@ public class OrderService {
         }
         return orderMapper.updateByPrimaryKeySelective(order);
     }
+
+    public int getOrderCount(){
+        return orderMapper.selectAll().size();
+    }
+
+    public List<Order> getOrderList(int page,int limit){
+        List<Order> list = orderMapper.selectAll();
+        return UserService.listUtil(list,page,limit);
+    }
 }

@@ -41,4 +41,17 @@ public class GameService {
     public int addGame(Game game){
         return gameMapper.insertSelective(game);
     }
+
+    public int getGameCount(){
+        return gameMapper.selectAll().size();
+    }
+
+    public List<Game> getGameList(int page,int limit){
+        List<Game> list = gameMapper.selectAll();
+        return UserService.listUtil(list,page,limit);
+    }
+
+    public int deleteGame(int gameId){
+        return gameMapper.deleteByPrimaryKey(gameId);
+    }
 }
