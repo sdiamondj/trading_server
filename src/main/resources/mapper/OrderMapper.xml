@@ -138,4 +138,16 @@
     where order_goods = #{goodId} and order_buyer = #{buyerId}
     and order_state != 5
   </select>
+  <select id="selectByState" resultMap="BaseResultMap" parameterType="java.lang.Short">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_state = #{state,jdbcType=SMALLINT}
+  </select>
+    <select id="selectByDate" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from t_order
+        where DATE_FORMAT(order_update_time,'%Y-%m-%d')=#{date,jdbcType=TIMESTAMP}
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -28,5 +29,9 @@ public interface OrderMapper {
 
     List<Order> selectAll();
 
+    List<Order> selectByState(short state);
+
     int selectCountIsSubmit(@Param("goodId")int goodId,@Param("buyerId")int buyerId);
+
+    List<Order> selectByDate(String date);
 }

@@ -48,5 +48,36 @@ table tbody th{
 	background: #fff;
 	padding: 6px 6px 6px 12px;
 	color: #4f6b72;
-
+}
+.totalDiv{
+	width: 1300px;
+	height: 625px;
+}
+.userDiv{
+	border: 1px solid;
+	width: 600px;
+	height: 300px;
+	font-size: 25px;
+}
+#sexDiv{
+	width: 550px;
+	height: 280px;
+}
+#historyDiv{
+	position: absolute;
+	top: 330px;
+	border: 1px solid;
+	width: 1230px;
+	height: 300px;
+	padding: 10px;
+}
+#dataDiv{
+	position: absolute;
+	left: 650px;
+	top: 15px;
+	border: 1px solid;
+	width: 595px;
+	height: 280px;
+	font-size: 28px;
+	padding: 10px;
 }

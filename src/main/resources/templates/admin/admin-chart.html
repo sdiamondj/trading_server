@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台管理系统</title>
+    <script type="text/javascript" th:src="@{/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/echarts.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/admin.html">控制台</a></li>
+            <li class="layui-nav-item"><a href="/index.html">游戏交易平台首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img th:src="'image/'+${session.user.userAvatar}" class="layui-nav-img">
+                    <span th:text="${session.user.userNickname}"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/user/logout">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="/admin-chart.html">数据报表</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">平台管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/admin-user.html">用户管理</a></dd>
+                        <dd><a href="/admin-game.html">游戏管理</a></dd>
+                        <dd><a href="/admin-goods.html">商品管理</a></dd>
+                        <dd><a href="/admin-order.html">订单管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/approval.html">商品审核</a></li>
+                <li class="layui-nav-item"><a href="/addGame.html">新游戏录入</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div class="totalDiv">
+                <div class="userDiv">
+                    <label>当前网站注册用户数:</label>
+                    <span style="color: red;font-size: 30px;" th:text="${userCount}"></span>
+                    <div id="sexDiv"></div>
+                </div>
+                <div id="dataDiv">
+                    <label>网站累计交易金额:&nbsp;</label>
+                    <span style="color: orange;font-size: 35px;" th:text="${total}"></span><label>&emsp;元</label><hr>
+                    <label>累计营收:&nbsp;</label>
+                    <span style="color: orange;font-size: 35px;" th:text="${in}"></span><label>&emsp;元</label><hr>
+                    <label>1亿营收小目标完成度:</label>
+                    <span style="color: red;font-size: 35px;" th:text="${percent}"></span>
+                    <label>%</label><hr>
+                    <img src="image/yiyi.jpg" style="width: 100px;height: 100px;position: relative;left: 200px;">
+                </div>
+                <div id="historyDiv"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © DiamondJ 联系邮箱shendongjian@email.ncu.edu.cn
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/layui.all.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+</script>
+
+
+
+<script type="text/javascript" th:inline="javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var sexChart = echarts.init(document.getElementById('sexDiv'));
+    sexChart.setOption({
+        series : [
+            {
+                name: '访问来源',
+                type: 'pie',    // 设置图表类型为饼图
+                radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                label : {
+                    normal : {
+                        formatter: '{b}:{c}: ({d}%)',
+                        textStyle : {
+                            fontWeight : 'normal',
+                            fontSize : 15
+                        }
+                    }
+                },
+                data:[          // 数据数组，name 为数据项名称，value 为数据项值
+                    {value:[[${noSexCount}]], name:'保密'},
+                    {value:[[${boyCount}]], name:'男'},
+                    {value:[[${girlCount}]], name:'女'},
+                ]
+            }
+        ]
+    });
+</script>
+<script type="text/javascript" th:inline="javascript">
+    var hisChart =  echarts.init(document.getElementById('historyDiv'));
+    hisChart.setOption({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        legend: {
+            data: ['完成订单量', '完成订单金额']
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: [
+                    [[${date13}]], [[${date12}]], [[${date11}]], [[${date10}]], [[${date9}]], [[${date8}]], [[${date7}]], [[${date6}]],[[${date5}]], [[${date4}]], [[${date3}]], [[${date2}]],[[${date1}]],[[${date0}]]
+                ],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '订单数量',
+                min: 0,
+                max: 50,
+                interval: 10,
+                axisLabel: {
+                    formatter: '{value} 单'
+                }
+            },
+            {
+                type: 'value',
+                name: '订单金额',
+                min: 0,
+                max: 1000,
+                interval: 200,
+                axisLabel: {
+                    formatter: '{value} 元'
+                }
+            }
+        ],
+        series: [
+            {
+                name: '完成订单量',
+                type: 'bar',
+                data: [
+                    [[${count13}]], [[${count12}]], [[${count11}]], [[${count10}]], [[${count9}]], [[${count8}]], [[${count7}]], [[${count6}]], [[${count5}]], [[${count4}]], [[${count3}]], [[${count2}]],[[${count1}]],[[${count0}]]
+                ]
+            },
+            {
+                name: '完成订单金额',
+                type: 'line',
+                yAxisIndex: 1,
+                data: [
+                    [[${money13}]], [[${money12}]], [[${money11}]], [[${money10}]], [[${money9}]], [[${money8}]], [[${money7}]], [[${money6}]], [[${money5}]], [[${money4}]], [[${money3}]], [[${money2}]],[[${money1}]],[[${money0}]]
+                ]
+            }
+        ]
+    });
+</script>
+
+</body>
+</html>

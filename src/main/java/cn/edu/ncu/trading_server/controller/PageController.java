@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -250,6 +252,25 @@ public class PageController {
             return "redirect:/index.html";
         }else{
             return "admin/admin-order";
+        }
+    }
+
+    @RequestMapping(value = "/admin-chart.html")
+    public String adminChart(HttpSession session,Model model){
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login.html";
+        }
+        if(user.getUserIsAdmin() == 0){
+            return "redirect:/index.html";
+        }else{
+            Map<String,Integer> counts = userService.getCounts();
+            model.addAllAttributes(counts);
+            Map<String, BigDecimal> data = orderService.getData();
+            model.addAllAttributes(data);
+            Map<String, Object> array = orderService.getArray();
+            model.addAllAttributes(array);
+            return "admin/admin-chart";
         }
     }
 

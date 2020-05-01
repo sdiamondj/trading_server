@@ -28,6 +28,8 @@ public interface UserMapper {
 
     int selectCount();
 
+    int selectCountBySex(int sex);
+
     List<User> selectAll();
 
 }

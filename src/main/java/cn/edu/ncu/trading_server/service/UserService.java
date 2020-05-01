@@ -6,7 +6,9 @@ import cn.edu.ncu.trading_server.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -20,6 +22,15 @@ public class UserService {
 
     public int getUserCount(){
         return userMapper.selectCount();
+    }
+
+    public Map<String,Integer> getCounts(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("userCount",userMapper.selectCount());
+        map.put("noSexCount",userMapper.selectCountBySex(0));
+        map.put("boyCount",userMapper.selectCountBySex(1));
+        map.put("girlCount",userMapper.selectCountBySex(2));
+        return map;
     }
 
     public static<T> List<T> listUtil(List<T> list,int page,int limit){

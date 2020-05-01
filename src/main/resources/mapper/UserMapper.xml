@@ -148,4 +148,9 @@
         <include refid="Base_Column_List"/>
         from t_user
     </select>
+  <select id="selectCountBySex" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select count(*)
+    from t_user
+    where user_sex = #{sex,jdbcType=INTEGER}
+  </select>
 </mapper>
