@@ -22,7 +22,7 @@
 			<div class="firstInput">
 				<i class="layui-icon layui-icon-username" style="font-size: 60px;"></i>
 				<div class="layui-input-block">
-	      			<input type="text" name="userPhone" required  lay-verify="required" placeholder="请输入手机号" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11" autocomplete="off" class="layui-input" style="position: relative;width: 350px;height: 60px; left: -30px;top:-60px;font-size: 30px;">
+	      			<input id="userPhone" type="text" name="userPhone" required  lay-verify="required" placeholder="请输入手机号" oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11" autocomplete="off" class="layui-input" style="position: relative;width: 350px;height: 60px; left: -30px;top:-60px;font-size: 30px;">
 	    		</div>
 			</div>
 			<br><br>
@@ -58,13 +58,24 @@
 
 <script>
 	function check() {
-		var pw = document.getElementById("password").value;
-		var rpw = document.getElementById("rePassword").value;
-		if(pw == rpw){
-			return true;
-		}else{
-			alert("两次输入的密码不一致，请确认!");
+		var phone = document.getElementById("userPhone").value;
+		if(phone < 10000000000){
+			alert("请输入正确的手机号!")
 			return false;
+		}else{
+			var pw = document.getElementById("password").value;
+			var rpw = document.getElementById("rePassword").value;
+			if(pw == rpw){
+				if(pw.length < 4){
+					alert("密码长度过低(最低4位)!");
+					return false;
+				}else{
+					return true;
+				}
+			}else{
+				alert("两次输入的密码不一致，请确认!");
+				return false;
+			}
 		}
 	}
 </script>

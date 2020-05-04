@@ -86,6 +86,13 @@ public class OrderService {
                 i = 2;
             }
         } else  {
+            if(orderState == 3){
+                Order order1 = orderMapper.selectByPrimaryKey(orderId);
+                Good good = new Good();
+                good.setGoodsId(order1.getOrderGoods());
+                good.setGoodsState((short)4);
+                goodMapper.updateByPrimaryKeySelective(good);
+            }
             i = (short)(orderState+1);
         }
         order.setOrderState(i);

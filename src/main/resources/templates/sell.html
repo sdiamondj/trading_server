@@ -92,7 +92,7 @@
                             <span style="font-size: 25px;" th:text="${sellVO.goodId}"></span></th>
                         <th><input type="text" name="goodName" required="required" th:value="${sellVO.goodName}" style="width: 140px;height: 50px;"></th>
                         <th><select name="goodGame" style="width: 120px;height: 55px;">
-                            <option th:each="game:${games}" th:value="${game.gameId}" th:text="${game.gameName}"></option>
+                            <option th:each="game:${games}" th:value="${game.gameId}" th:text="${game.gameName}" th:selected="${sellVO.goodGame eq game.gameName}"></option>
                         </select></th>
                         <th><input type="text" name="gameServer" th:value="${sellVO.gameServer}" style="width: 125px; height: 50px;" required="required"></th>
                         <th><input type="number" name="goodPrice" min="0.01" step="0.01" th:value="${sellVO.goodPrice}" style="width: 115px;height: 50px;color: orange; font-size: 35px;" required="required" ></th>
