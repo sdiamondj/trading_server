@@ -130,6 +130,7 @@ public class OrderService {
         if(!total.equals(new BigDecimal(0))){
             in = total.multiply(new BigDecimal(0.05)).setScale(2,BigDecimal.ROUND_HALF_UP);
             percent = in.divide(new BigDecimal(100000000),6,BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+            percent = percent.setScale(4,BigDecimal.ROUND_HALF_UP);
         }else{
             percent = new BigDecimal(0);
             in = new BigDecimal(0);
@@ -143,19 +144,9 @@ public class OrderService {
         Map<String,Object> map = new HashMap<>();
         LocalDate date = LocalDate.now();
         map.put("date0",date.toString());
-        map.put("date1",date.plusDays(-1).toString());
-        map.put("date2",date.plusDays(-2).toString());
-        map.put("date3",date.plusDays(-3).toString());
-        map.put("date4",date.plusDays(-4).toString());
-        map.put("date5",date.plusDays(-5).toString());
-        map.put("date6",date.plusDays(-6).toString());
-        map.put("date7",date.plusDays(-7).toString());
-        map.put("date8",date.plusDays(-8).toString());
-        map.put("date9",date.plusDays(-9).toString());
-        map.put("date10",date.plusDays(-10).toString());
-        map.put("date11",date.plusDays(-11).toString());
-        map.put("date12",date.plusDays(-12).toString());
-        map.put("date13",date.plusDays(-13).toString());
+        for(int i = 1; i <=13 ; i++){
+            map.put("date"+i,date.plusDays(-i).toString());
+        }
         for(int i = 0; i > -14; i--){
             LocalDate cur = date.plusDays(i);
             List<Order> list = orderMapper.selectByDate(cur.toString());
