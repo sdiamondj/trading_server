@@ -11,7 +11,7 @@
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 09/05/2020 10:20:55
+ Date: 20/05/2020 11:49:19
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `t_game`  (
   `game_picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '游戏图片',
   `game_type` smallint(4) NOT NULL DEFAULT 0 COMMENT '0-未分类 1-客户端游戏 2-网页游戏 3-手机游戏 4-其他游戏 默认0',
   PRIMARY KEY (`game_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_game
@@ -73,6 +73,7 @@ INSERT INTO `t_game` VALUES (00000039, '联通充值卡', 'ltczk.jpg', 4);
 INSERT INTO `t_game` VALUES (00000040, '移动充值卡', 'ydczk.jpg', 4);
 INSERT INTO `t_game` VALUES (00000041, '优酷会员', 'ykhy.jpg', 4);
 INSERT INTO `t_game` VALUES (00000042, '网易一卡通', 'wyykt.jpg', 4);
+INSERT INTO `t_game` VALUES (00000045, '贪玩蓝月', '1589279084363批注 2020-05-12 182422.png', 2);
 
 -- ----------------------------
 -- Table structure for t_goods
@@ -81,16 +82,20 @@ DROP TABLE IF EXISTS `t_goods`;
 CREATE TABLE `t_goods`  (
   `goods_id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '商品id',
   `goods_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品名称',
-  `goods_game` int(8) NOT NULL COMMENT '商品所属游戏id',
-  `goods_seller` int(8) NOT NULL COMMENT '商品所属卖家id',
+  `goods_game` int(8) UNSIGNED NOT NULL COMMENT '商品所属游戏id',
+  `goods_seller` int(8) UNSIGNED NOT NULL COMMENT '商品所属卖家id',
   `goods_price` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '商品价格',
   `goods_state` smallint(4) NOT NULL DEFAULT 0 COMMENT '0-待审核 1-已上架 2-已下架 3-交易中 4-已售出 5-审核不通过 默认0',
   `goods_game_server` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品所属游戏服务器',
   `goods_update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '商品更新时间',
   `goods_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品简介',
   `goods_picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'logo.png' COMMENT '商品图片',
-  PRIMARY KEY (`goods_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 210 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`goods_id`) USING BTREE,
+  INDEX `game`(`goods_game`) USING BTREE,
+  INDEX `seller`(`goods_seller`) USING BTREE,
+  CONSTRAINT `game` FOREIGN KEY (`goods_game`) REFERENCES `t_game` (`game_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `seller` FOREIGN KEY (`goods_seller`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 237 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_goods
@@ -98,10 +103,10 @@ CREATE TABLE `t_goods`  (
 INSERT INTO `t_goods` VALUES (00000015, 'lol一万点券 秒发', 1, 1, 95.00, 1, '艾欧尼亚', '2020-05-02 13:09:00', '10000点券速发，官方价100现价95，要的兄弟速度拍了', '1588395829545yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000016, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-02 13:26:03', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000017, 'LOL十万点券 黑玫', 1, 40, 900.00, 4, '黑色玫瑰', '2020-05-02 13:40:57', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000018, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-02 13:26:10', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000018, 'LOL十万点券 黑玫', 1, 40, 900.00, 3, '黑色玫瑰', '2020-05-12 18:50:20', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000019, 'LOL十万点券 黑玫', 1, 40, 900.00, 4, '黑色玫瑰', '2020-05-04 16:23:03', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000020, 'LOL十万点券 黑玫', 1, 40, 900.00, 4, '黑色玫瑰', '2020-05-04 16:23:45', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000021, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-02 13:26:11', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000021, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-12 18:48:24', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000022, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-02 13:26:11', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000023, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-02 13:26:11', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000024, 'LOL十万点券 黑玫', 1, 40, 900.00, 1, '黑色玫瑰', '2020-05-02 13:26:11', '十万点券9折出售，官方直冲，有需要的直接拍下，24小时在线发货', '1588396316212yxlm.jpg');
@@ -161,7 +166,7 @@ INSERT INTO `t_goods` VALUES (00000077, '2980信用点代充', 9, 32, 297.00, 1,
 INSERT INTO `t_goods` VALUES (00000078, '2980信用点代充', 9, 32, 297.00, 4, '苹果-全区', '2020-05-05 12:26:05', '24小时在线发货', '1588652601170mrzh.jpg');
 INSERT INTO `t_goods` VALUES (00000079, '2980信用点代充', 9, 32, 297.00, 4, '苹果-全区', '2020-05-05 12:40:39', '24小时在线发货', '1588652601170mrzh.jpg');
 INSERT INTO `t_goods` VALUES (00000080, '2980信用点代充', 9, 32, 297.00, 1, '苹果-全区', '2020-05-05 12:24:36', '24小时在线发货', '1588652601170mrzh.jpg');
-INSERT INTO `t_goods` VALUES (00000081, '5月新礼包永久CDK', 35, 42, 88.00, 1, '全区全服', '2020-05-05 12:32:30', '有概率出永久A、永久道具等', '1588653100764libao.png');
+INSERT INTO `t_goods` VALUES (00000081, '5月新礼包永久CDK', 35, 42, 88.00, 1, '全区全服', '2020-05-12 18:13:16', '有概率出永久A、永久道具等', '1588653100764libao.png');
 INSERT INTO `t_goods` VALUES (00000082, '5月新礼包永久CDK', 35, 42, 88.00, 1, '全区全服', '2020-05-05 12:32:30', '有概率出永久A、永久道具等', '1588653100764libao.png');
 INSERT INTO `t_goods` VALUES (00000083, '5月新礼包永久CDK', 35, 42, 88.00, 1, '全区全服', '2020-05-05 12:32:30', '有概率出永久A、永久道具等', '1588653100764libao.png');
 INSERT INTO `t_goods` VALUES (00000084, '5月新礼包永久CDK', 35, 42, 88.00, 1, '全区全服', '2020-05-05 12:32:30', '有概率出永久A、永久道具等', '1588653100764libao.png');
@@ -254,22 +259,50 @@ INSERT INTO `t_goods` VALUES (00000206, 'lol一万点券 秒发', 1, 1, 95.00, 4
 INSERT INTO `t_goods` VALUES (00000207, 'lol一万点券 秒发', 1, 1, 95.00, 4, '艾欧尼亚', '2020-05-08 10:36:59', '10000点券速发，官方价100现价95，要的兄弟速度拍了', '1588395829545yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000208, 'lol一万点券 秒发', 1, 1, 95.00, 4, '艾欧尼亚', '2020-05-08 10:37:02', '10000点券速发，官方价100现价95，要的兄弟速度拍了', '1588395829545yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000209, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000210, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000211, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000212, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000213, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000214, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000215, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000216, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000217, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000218, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000219, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000220, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
-INSERT INTO `t_goods` VALUES (00000221, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-09 10:12:51', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000210, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-15 10:43:42', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000211, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-13 15:28:52', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000212, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-12 15:05:03', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000213, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-12 15:05:01', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000214, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-12 15:04:59', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000215, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:09:04', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000216, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:09:02', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000217, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:09:01', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000218, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:08:59', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000219, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:07:37', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000220, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:07:34', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000221, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-11 19:07:32', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000222, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-09 10:17:14', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000223, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-09 10:14:57', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000224, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-09 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
 INSERT INTO `t_goods` VALUES (00000225, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-09 10:14:53', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000226, 'LOL五一礼包', 1, 1, 88.00, 0, '艾欧尼亚', '2020-05-12 18:23:19', '最新出炉的五一礼包，一个人最多使用一份，如果用过了请不要拍', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000227, '贪玩蓝月', 42, 51, 98.00, 2, '铁通163', '2020-05-12 18:27:22', '这是一个刚打了怪的账号，掉落了很多金币、钻石', '1589278544203recommand.png');
+INSERT INTO `t_goods` VALUES (00000229, 'LOL十万点券直发', 1, 36, 949.00, 1, '艾欧尼亚', '2020-05-15 10:46:53', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000230, 'LOL十万点券直发', 1, 36, 949.00, 1, '艾欧尼亚', '2020-05-15 10:46:55', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000231, 'LOL十万点券直发', 1, 36, 949.00, 4, '艾欧尼亚', '2020-05-19 12:01:56', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000232, 'LOL十万点券直发', 1, 36, 949.00, 4, '艾欧尼亚', '2020-05-19 12:01:54', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000233, 'LOL十万点券直发', 1, 36, 949.00, 4, '艾欧尼亚', '2020-05-19 12:01:52', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000234, 'LOL十万点券直发', 1, 36, 949.00, 4, '艾欧尼亚', '2020-05-19 12:01:50', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000235, 'LOL十万点券直发', 1, 36, 949.00, 4, '艾欧尼亚', '2020-05-15 10:47:39', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000236, 'LOL十万点券直发', 1, 36, 949.00, 4, '艾欧尼亚', '2020-05-15 10:47:42', '点券直发，比官方还要便宜啊啊啊啊啊啊', '1589510713446yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000237, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000238, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000239, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000240, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000241, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000242, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000243, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000244, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000245, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000246, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000247, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000248, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000249, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000250, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000251, '50000点券LOL', 1, 48, 450.00, 1, '黑色玫瑰', '2020-05-19 10:14:55', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000252, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-20 10:32:36', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000253, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-20 10:32:34', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
+INSERT INTO `t_goods` VALUES (00000254, '50000点券LOL', 1, 48, 450.00, 4, '黑色玫瑰', '2020-05-20 10:32:33', '官方直冲，24小时在线发货。', '1588990220040yxlm.jpg');
 
 -- ----------------------------
 -- Table structure for t_order
@@ -277,14 +310,18 @@ INSERT INTO `t_goods` VALUES (00000225, '50000点券LOL', 1, 48, 450.00, 4, '黑
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order`  (
   `order_id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '订单id',
-  `order_buyer` int(8) NOT NULL COMMENT '买家id',
-  `order_goods` int(8) NOT NULL COMMENT '商品id',
+  `order_buyer` int(8) UNSIGNED NOT NULL COMMENT '买家id',
+  `order_goods` int(8) UNSIGNED NOT NULL COMMENT '商品id',
   `order_state` smallint(4) NOT NULL DEFAULT 1 COMMENT '0-待付款 1-买家已付款，待卖家发货 2-卖家已发货 3-已确认收货 4-已完成 5-已取消 默认1(系统暂无法接入支付模块)',
   `order_create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '订单创建时间',
   `order_update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '订单更新时间',
   `order_receiving_account` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单所填收货账号',
-  PRIMARY KEY (`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`order_id`) USING BTREE,
+  INDEX `buyer`(`order_buyer`) USING BTREE,
+  INDEX `goods`(`order_goods`) USING BTREE,
+  CONSTRAINT `buyer` FOREIGN KEY (`order_buyer`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `goods` FOREIGN KEY (`order_goods`) REFERENCES `t_goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 108 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_order
@@ -293,7 +330,7 @@ INSERT INTO `t_order` VALUES (00000037, 1, 25, 4, '2020-05-02 13:27:05', '2020-0
 INSERT INTO `t_order` VALUES (00000038, 1, 17, 4, '2020-05-02 13:27:29', '2020-05-02 13:29:28', '听丶风吹过的夏天');
 INSERT INTO `t_order` VALUES (00000039, 1, 33, 4, '2020-05-02 13:27:55', '2020-05-02 13:29:33', 'EDG丶DiamondJ');
 INSERT INTO `t_order` VALUES (00000040, 25, 26, 4, '2020-05-01 13:34:08', '2020-05-01 13:40:43', 'huya神超');
-INSERT INTO `t_order` VALUES (00000041, 18, 46, 4, '2020-05-01 13:41:53', '2020-05-01 13:42:21', '冬瓜....');
+INSERT INTO `t_order` VALUES (00000041, 18, 46, 4, '2020-05-01 13:41:53', '2020-05-14 13:42:21', '冬瓜....');
 INSERT INTO `t_order` VALUES (00000042, 28, 19, 4, '2020-05-04 16:22:27', '2020-05-04 16:23:12', 'huya丶红莲3');
 INSERT INTO `t_order` VALUES (00000043, 28, 20, 4, '2020-05-03 16:23:33', '2020-05-03 16:23:39', 'huya丶红莲3');
 INSERT INTO `t_order` VALUES (00000044, 1, 45, 4, '2020-05-04 16:29:26', '2020-05-04 16:29:43', '东东哦哦哦');
@@ -338,62 +375,91 @@ INSERT INTO `t_order` VALUES (00000082, 49, 225, 4, '2020-05-09 10:14:18', '2020
 INSERT INTO `t_order` VALUES (00000083, 49, 224, 4, '2020-05-09 10:14:31', '2020-05-09 10:15:08', '吾乃修罗道');
 INSERT INTO `t_order` VALUES (00000084, 49, 223, 4, '2020-05-09 10:14:46', '2020-05-09 10:15:06', '修罗道吾乃');
 INSERT INTO `t_order` VALUES (00000085, 50, 222, 4, '2020-05-09 10:16:58', '2020-05-09 10:17:08', '听丶风吹过的夏天');
+INSERT INTO `t_order` VALUES (00000086, 44, 221, 4, '2020-05-10 19:07:09', '2020-05-10 19:07:52', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000087, 44, 219, 4, '2020-05-10 19:07:18', '2020-05-10 19:07:55', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000088, 44, 220, 4, '2020-05-10 19:07:25', '2020-05-10 19:07:58', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000089, 44, 218, 4, '2020-05-11 19:08:22', '2020-05-11 19:08:47', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000090, 44, 217, 4, '2020-05-11 19:08:29', '2020-05-11 19:08:49', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000091, 44, 216, 4, '2020-05-11 19:08:34', '2020-05-11 19:08:51', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000092, 44, 215, 4, '2020-05-11 19:08:40', '2020-05-11 19:08:52', '马化腾他爹');
+INSERT INTO `t_order` VALUES (00000093, 18, 214, 4, '2020-05-12 15:04:07', '2020-05-12 15:05:10', '斗鱼丶咖喱咖喱');
+INSERT INTO `t_order` VALUES (00000094, 18, 213, 4, '2020-05-12 15:04:14', '2020-05-12 15:05:12', '斗鱼丶咖喱咖喱');
+INSERT INTO `t_order` VALUES (00000095, 18, 212, 4, '2020-05-12 15:04:23', '2020-05-12 15:05:13', '斗鱼丶咖喱咖喱');
+INSERT INTO `t_order` VALUES (00000096, 1, 21, 5, '2020-05-12 16:57:31', '2020-05-12 18:48:24', '斗鱼sudowodo');
+INSERT INTO `t_order` VALUES (00000097, 1, 18, 3, '2020-05-12 18:50:20', '2020-05-12 19:06:26', '斗鱼sudowodo');
+INSERT INTO `t_order` VALUES (00000098, 51, 81, 5, '2020-05-12 18:08:52', '2020-05-12 18:13:16', '*');
+INSERT INTO `t_order` VALUES (00000100, 18, 211, 4, '2020-05-13 15:28:12', '2020-05-13 15:29:37', 'huya一号大神');
+INSERT INTO `t_order` VALUES (00000101, 33, 210, 4, '2020-05-15 10:41:07', '2020-05-15 10:43:53', '4AMGODV');
+INSERT INTO `t_order` VALUES (00000102, 33, 236, 4, '2020-05-15 10:47:20', '2020-05-15 10:47:48', '4AMGODV');
+INSERT INTO `t_order` VALUES (00000103, 33, 235, 4, '2020-05-15 10:47:27', '2020-05-15 10:47:50', '4AMGODV');
+INSERT INTO `t_order` VALUES (00000104, 47, 234, 4, '2020-05-16 11:59:55', '2020-05-16 12:02:19', 'RNG丶Uzi');
+INSERT INTO `t_order` VALUES (00000105, 47, 233, 4, '2020-05-18 12:00:03', '2020-05-18 12:02:21', 'RNG丶Uzi');
+INSERT INTO `t_order` VALUES (00000106, 47, 232, 4, '2020-05-19 12:00:09', '2020-05-19 12:02:22', 'RNG丶Uzi');
+INSERT INTO `t_order` VALUES (00000107, 47, 231, 4, '2020-05-19 12:00:16', '2020-05-19 12:02:24', 'RNG丶Uzi');
+INSERT INTO `t_order` VALUES (00000108, 47, 254, 4, '2020-05-20 10:32:11', '2020-05-20 10:32:47', '无极剑圣丶马云');
+INSERT INTO `t_order` VALUES (00000109, 47, 253, 4, '2020-05-20 10:32:19', '2020-05-20 10:32:45', '无极剑圣丶马云');
+INSERT INTO `t_order` VALUES (00000110, 47, 252, 4, '2020-05-20 10:32:25', '2020-05-20 10:32:43', '无极剑圣丶马云');
 
 -- ----------------------------
 -- Table structure for t_user
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`  (
-  `user_id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '用户主键 8位自增',
+  `user_id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '用户主键',
   `user_phone` bigint(15) NOT NULL COMMENT '用户手机号,唯一',
   `user_nickname` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '游戏玩家' COMMENT '用户昵称,默认为游戏玩家',
   `user_sex` tinyint(2) NULL DEFAULT 0 COMMENT '0-保密 1-男 2-女 默认0',
-  `user_avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'logo.png' COMMENT '用户头像，此字段暂为保留字段',
-  `user_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码(暂定加密存储)',
-  `user_register_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '用户注册时间',
+  `user_avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'logo.png' COMMENT '用户头像',
+  `user_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
+  `user_register_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '用户注册时间',
   `user_is_admin` int(8) NOT NULL DEFAULT 0 COMMENT '用户是否为管理员 0-不是 1-是 默认-0',
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `user_phone`(`user_phone`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (00000001, 15797898656, 'DiamondJ', 1, '1588395676914yiyi.jpg', '1234', '1997-12-07 12:17:50', 1);
-INSERT INTO `t_user` VALUES (00000002, 18352878865, 'GLM', 2, 'logo.png', '0528', '2020-05-02 12:18:24', 1);
-INSERT INTO `t_user` VALUES (00000017, 15797898657, '山寨DJ', 1, 'logo.png', '1234', '2020-05-02 12:33:48', 0);
-INSERT INTO `t_user` VALUES (00000018, 15797898658, '山寨二号DJ', 1, 'logo.png', '1234', '2020-05-02 12:33:46', 0);
-INSERT INTO `t_user` VALUES (00000019, 15797898659, '还是DJ啊', 0, 'logo.png', '1234', '2020-05-02 12:34:08', 0);
-INSERT INTO `t_user` VALUES (00000020, 15797898660, '不想玩了啊', 2, 'logo.png', '1234', '2020-05-02 12:34:32', 0);
-INSERT INTO `t_user` VALUES (00000021, 15797898661, 'superDJ', 0, 'logo.png', '1234', '2020-05-02 12:37:39', 0);
-INSERT INTO `t_user` VALUES (00000022, 15797898662, 'GoodBoy', 1, 'logo.png', '1234', '2020-05-02 12:38:07', 0);
-INSERT INTO `t_user` VALUES (00000023, 15797898663, 'prettygirl', 2, 'logo.png', '1234', '2020-05-02 12:38:27', 0);
-INSERT INTO `t_user` VALUES (00000024, 15797898664, '兄弟们给我冲', 1, 'logo.png', '1234', '2020-05-02 12:44:53', 0);
-INSERT INTO `t_user` VALUES (00000025, 15797898665, '奥力给', 2, 'logo.png', '1234', '2020-05-02 12:45:36', 0);
-INSERT INTO `t_user` VALUES (00000026, 15797898666, '阿里巴巴-马云', 1, 'logo.png', '1234', '2020-05-02 12:45:55', 0);
-INSERT INTO `t_user` VALUES (00000027, 15797898667, '腾讯-马化腾', 1, 'logo.png', '1234', '2020-05-02 12:46:13', 0);
-INSERT INTO `t_user` VALUES (00000028, 15797898668, '小米-雷军', 1, 'logo.png', '1234', '2020-05-02 12:46:28', 0);
-INSERT INTO `t_user` VALUES (00000029, 15797898669, '字节跳动-张一鸣', 1, 'logo.png', '1234', '2020-05-02 12:46:54', 0);
-INSERT INTO `t_user` VALUES (00000030, 15797898670, '阿里巴巴的小弟', 2, 'logo.png', '1234', '2020-05-02 12:48:50', 0);
-INSERT INTO `t_user` VALUES (00000031, 15797898671, '阿里巴巴的小妹', 2, 'logo.png', '1234', '2020-05-02 12:49:09', 0);
-INSERT INTO `t_user` VALUES (00000032, 15797898672, '阿里巴巴的哥哥', 1, 'logo.png', '1234', '2020-05-02 12:49:26', 0);
-INSERT INTO `t_user` VALUES (00000033, 15797898673, '4AM-GODV', 1, 'logo.png', '1234', '2020-05-02 12:51:00', 0);
-INSERT INTO `t_user` VALUES (00000034, 15797898674, '4AM-Longz', 1, 'logo.png', '1234', '2020-05-02 12:51:25', 0);
-INSERT INTO `t_user` VALUES (00000035, 15797898675, 'EDGClearlove', 1, 'logo.png', '1234', '2020-05-02 12:52:03', 0);
-INSERT INTO `t_user` VALUES (00000036, 15797898676, 'loli', 2, 'logo.png', '1234', '2020-05-02 12:52:50', 0);
-INSERT INTO `t_user` VALUES (00000037, 15797898677, 'god', 0, 'logo.png', '1234', '2020-05-02 12:53:04', 0);
-INSERT INTO `t_user` VALUES (00000038, 15797898678, 'tencent', 0, 'logo.png', '1234', '2020-05-02 12:56:02', 0);
-INSERT INTO `t_user` VALUES (00000039, 15797898679, 'let us go', 2, 'logo.png', '1234', '2020-05-02 12:58:57', 0);
-INSERT INTO `t_user` VALUES (00000040, 18888888888, '职业商人', 0, 'logo.png', '1234', '2020-05-02 13:10:49', 0);
-INSERT INTO `t_user` VALUES (00000041, 15797898680, '虎牙唐伯虎', 0, 'logo.png', '1234', '2020-05-05 12:27:26', 0);
-INSERT INTO `t_user` VALUES (00000042, 15797898681, '虎牙秋香', 2, 'logo.png', '1234', '2020-05-05 12:27:44', 0);
-INSERT INTO `t_user` VALUES (00000043, 15797898682, '斗鱼祝枝山', 1, 'logo.png', '1234', '2020-05-05 12:27:59', 0);
-INSERT INTO `t_user` VALUES (00000044, 15797898683, '马化腾他爹', 0, 'logo.png', '1234', '2020-05-05 12:28:15', 0);
-INSERT INTO `t_user` VALUES (00000045, 15797898684, '游戏玩家', 2, 'logo.png', '1234', '2020-05-05 12:28:33', 0);
-INSERT INTO `t_user` VALUES (00000046, 15797898685, '游戏玩家', 2, 'logo.png', '1234', '2020-05-05 12:28:43', 0);
-INSERT INTO `t_user` VALUES (00000047, 15797898686, 'uzi', 1, 'logo.png', '1234', '2020-05-05 12:29:00', 0);
-INSERT INTO `t_user` VALUES (00000048, 15797898652, '游戏玩家', 0, 'logo.png', '1234', '2020-05-09 10:09:00', 0);
-INSERT INTO `t_user` VALUES (00000049, 15797898638, '游戏玩家', 0, 'logo.png', '1234', '2020-05-09 10:13:50', 0);
-INSERT INTO `t_user` VALUES (00000050, 15797898612, '小橘子', 2, '1588990649865qqfcsy.jpg', '1234', '2020-05-09 10:16:26', 0);
+INSERT INTO `t_user` VALUES (00000001, 15797898656, 'DiamondJ', 1, '1588395676914yiyi.jpg', '81dc9bdb52d04dc20036dbd8313ed055', '2020-01-01 11:39:03', 1);
+INSERT INTO `t_user` VALUES (00000002, 18352878865, 'GLM', 2, 'logo.png', 'a8039d12c5011e25df37cc608100618a', '2020-02-01 11:39:54', 1);
+INSERT INTO `t_user` VALUES (00000017, 15797898657, '山寨DJ', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000018, 15797898658, '山寨二号DJ', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000019, 15797898659, '还是DJ啊', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000020, 15797898660, '不想玩了啊', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000021, 15797898661, 'superDJ', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000022, 15797898662, 'GoodBoy', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000023, 15797898663, 'prettygirl', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000024, 15797898664, '兄弟们给我冲', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000025, 15797898665, '奥力给', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000026, 15797898666, '阿里巴巴-马云', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000027, 15797898667, '腾讯-马化腾', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000028, 15797898668, '小米-雷军', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000029, 15797898669, '字节跳动-张一鸣', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000030, 15797898670, '阿里巴巴的小弟', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000031, 15797898671, '阿里巴巴的小妹', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000032, 15797898672, '阿里巴巴的哥哥', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000033, 15797898673, '4AM-GODV', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000034, 15797898674, '4AM-Longz', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000035, 15797898675, 'EDGClearlove', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000036, 15797898676, 'loli', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000037, 15797898677, 'god', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000038, 15797898678, 'tencent', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000039, 15797898679, 'let us go', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000040, 18888888888, '职业商人', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000041, 15797898680, '虎牙唐伯虎', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000042, 15797898681, '虎牙秋香', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000043, 15797898682, '斗鱼祝枝山', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000044, 15797898683, '马化腾他爹', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000045, 15797898684, '游戏玩家', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000046, 15797898685, '游戏玩家', 2, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000047, 15797898686, 'uzi', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000048, 15797898652, '游戏玩家', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000049, 15797898638, '游戏玩家', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000050, 15797898612, '小橘子', 2, '1588990649865qqfcsy.jpg', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000051, 11111111111, '游戏玩家', 1, '1589278379578109951164574820690 (2).jpg', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 1);
+INSERT INTO `t_user` VALUES (00000052, 15797898611, '游戏玩家123', 1, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000053, 15797898613, '游戏玩121', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000054, 15797898614, '游戏玩家555', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-01 12:39:03', 0);
+INSERT INTO `t_user` VALUES (00000055, 15797898633, '游戏玩家', 0, 'logo.png', '81dc9bdb52d04dc20036dbd8313ed055', '2020-05-20 11:36:38', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

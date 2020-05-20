@@ -1,5 +1,6 @@
 package cn.edu.ncu.trading_server.controller;
 
+import cn.edu.ncu.trading_server.config.MyUtil;
 import cn.edu.ncu.trading_server.dto.UserLoginDTO;
 import cn.edu.ncu.trading_server.entity.Game;
 import cn.edu.ncu.trading_server.entity.Good;
@@ -43,12 +44,17 @@ public class FunctionController {
     public String userLogin(@RequestParam("userPhone")Long userPhone,
                             @RequestParam("password")String userPassword,
                             HttpSession session){
-        UserLoginDTO userLoginDTO = new UserLoginDTO(userPhone,userPassword);
+        String newPs;
+        try {
+            newPs = MyUtil.md5(userPassword);
+        }catch (Exception e){
+            newPs = userPassword;
+        }
+        UserLoginDTO userLoginDTO = new UserLoginDTO(userPhone,newPs);
         User user = userService.userLogin(userLoginDTO);
         if(user == null){
             return "redirect:/login.html?error=true";
         }else{
-            //session.invalidate();
             session.setAttribute("user",user);
             return "redirect:/index.html";
         }
@@ -57,7 +63,13 @@ public class FunctionController {
     @RequestMapping(value = "/user/register",method = RequestMethod.POST)
     public String userRegister(@RequestParam("userPhone")Long userPhone,
                                @RequestParam("password")String userPassword){
-        UserLoginDTO userLoginDTO = new UserLoginDTO(userPhone,userPassword);
+        String newPs;
+        try {
+            newPs = MyUtil.md5(userPassword);
+        }catch (Exception e){
+            newPs = userPassword;
+        }
+        UserLoginDTO userLoginDTO = new UserLoginDTO(userPhone,newPs);
         int i = userService.userRegister(userLoginDTO);
         if(i == 0){
             return "redirect:/register.html?error=true";
@@ -78,12 +90,9 @@ public class FunctionController {
         int res = orderService.submitOrder(user.getUserId(),goodId,account);
         if(res == 1){
             Good good = goodService.getGoodById(goodId);
-            if(good.getGoodsSeller().equals(user.getUserId())){
+            if(good.getGoodsSeller().equals(user.getUserId()) || good.getGoodsState() != 1){
                 return "redirect:/404.html";
-            }
-            if(good.getGoodsState() != 1){
-                return "redirect:/404.html";
-            }else{
+            } else{
                 int i = goodService.changeState(goodId,(short) 3);
                 if(i != 1){
                     return "redirect:/404.html";
@@ -389,6 +398,8 @@ public class FunctionController {
         }
         return map;
     }
+
+
 
 
 }
