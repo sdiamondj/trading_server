@@ -1,5 +1,6 @@
 package cn.edu.ncu.trading_server.service;
 
+import cn.edu.ncu.trading_server.config.MyUtil;
 import cn.edu.ncu.trading_server.dto.UserLoginDTO;
 import cn.edu.ncu.trading_server.entity.User;
 import cn.edu.ncu.trading_server.mapper.UserMapper;
@@ -69,7 +70,13 @@ public class UserService {
 
     public int updateUser(User oldUser,String nickname,String password,byte sex,String url){
         oldUser.setUserNickname(nickname);
-        oldUser.setUserPassword(password);
+        if(!password.equals("")){
+            try {
+                oldUser.setUserPassword(MyUtil.md5(password));
+            }catch (Exception e){
+                //
+            }
+        }
         oldUser.setUserSex(sex);
         if(url != null && !"".equals(url)){
             oldUser.setUserAvatar(url);

@@ -137,7 +137,7 @@ public class FunctionController {
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     public String updateUser(HttpSession session,
             @RequestParam("nickname")String nickname,
-            @RequestParam("password")String password,
+            @RequestParam(value = "password",required = false,defaultValue = "")String password,
             @RequestParam(value = "sex")byte sex,
                              @RequestParam(value = "url",required = false,defaultValue = "")String url){
         User oldUser = (User)session.getAttribute("user");
