@@ -9,7 +9,6 @@ import cn.edu.ncu.trading_server.mapper.UserMapper;
 import cn.edu.ncu.trading_server.vo.ApprovalVO;
 import cn.edu.ncu.trading_server.vo.SearchGood;
 import cn.edu.ncu.trading_server.vo.SellVO;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
